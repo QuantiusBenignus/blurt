@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.blurt" path="/org/gnome/shell/extensions/blurt/">
+      <key name="speech-input" type="as">
+          <default><![CDATA[['<Ctrl><Alt>Z']]]></default>
+          <summary>Enables speech input</summary>
+          <description>Start or stop dictation</description>
+      </key>
+      <key name="whisper-path" type="s">
+          <default>".local/bin/wsi"</default>
+          <summary>ASR location</summary>
+          <description>Speech recognizer executable path relative to $HOME, e.g. $HOME/.local/bin/wsi</description>
+      </key>
+  </schema>
+</schemalist>
