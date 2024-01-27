@@ -9,7 +9,7 @@ When speech input is initiated, a microphone indicator icon appears in the top b
 The disappearance of the microphone icon from the top bar indicates that the process is completed and the extension has "blurted" a snippet of text that can be pasted with the middle mouse button. (Note that on slower systems there may be a slight delay after the microphone icon disappears and before the text reaches the clipboard due to the time needed for transcription. On my computer it is less than 300 ms for an average paragraph of spoken text).
 
 The convenience that this extension affords is demonstrated in this screencast:
-[Screencast](resources/Screencast.webm)
+[Screencast](resources/Screencast.mp4)
 
 #### SYSTEM SETUP
 
