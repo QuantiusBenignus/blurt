@@ -1,0 +1,16 @@
+/* Add your custom extension styling here */
+."panel-button" {
+    color: black;
+}
+.si-label {
+    color: white;
+    font-size: 16px;
+/*    background-color: rgba(0, 0, 0, 0.5); */
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.i-label {
+    font-size: 16px;
+    font-weight: bold;
+}
