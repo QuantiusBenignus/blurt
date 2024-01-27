@@ -37,12 +37,12 @@ The keyboard shortcut to initiate speech input can also be modified if necessary
 ##### Notes
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp:
 `rec -t wav $ramf rate 16k silence 1 0.1 3% 1 2.0 7% `
-It will attempt to stop on silence of 2s with signal level threshold of 7%. A very noisy environment will prevent the detection of silence and the recording (of noise) will continue. This is a probelm and a remedy that may not work in all cases is to adjust the duration and level threshold in the soz filter above. 
-After the speech is captured, it will be passed to `transcribe` (whisper.cpp) for speech recognition. This will happen faster than real time (especiall with fast CPU or if your whisper.cpp installation uses CUDA). One can adjust the number of processing threads used by adding  `-t n` to the command line parameters of transcribe (please, see whisper.cpp documentation). 
+It will attempt to stop on silence of 2s with signal level threshold of 7%. A very noisy environment will prevent the detection of silence and the recording (of noise) will continue. This is a problem and a remedy that may not work in all cases is to adjust the duration and level threshold in the sox filter above. 
+After the speech is captured, it will be passed to `transcribe` (whisper.cpp) for speech recognition. This will happen faster than real time (especially with a fast CPU or if your whisper.cpp installation uses CUDA). One can adjust the number of processing threads used by adding  `-t n` to the command line parameters of transcribe (please, see whisper.cpp documentation). 
 The script will then parse the text to remove non-speech artifacts and send it to the PRIMARY clipboard using either X11 or Wayland tools. 
 
 ##### Temporary directory and files
-Audio-to-text transcription is memory- and CPU-intensive task and fast storage for read and write access can only help. That is why **wsi** stores temporary and resource files in memory, for speed and to reduce SSD/HDD "grinding": `TEMPD='/dev/shm'`. 
+Speech-to-text transcription is memory- and CPU-intensive task and fast storage for read and write access can only help. That is why **wsi** stores temporary and resource files in memory, for speed and to reduce SSD/HDD "grinding": `TEMPD='/dev/shm'`. 
 This mount point of type "tmpfs" is created in RAM (let's assume that you have enough, say, at least 8GB) and is made available by the kernel for user-space applications. When the computer is shut down it is automatically wiped out, which is fine since we do not need the intermediate files.
 In fact, for many applications that are stored in Appimage format, it would be beneficial (IMHO) to have the systemwide /tmp mount point also kept in RAM. Moving /tmp to RAM may speed up application startup a bit. A welcome speedup for any Electron app.  In its simplest form, this transition is easy, just run:
 `echo "tmpfs /tmp tmpfs rw,nosuid,nodev" | sudo tee -a /etc/fstab`
@@ -51,6 +51,9 @@ For the aforementioned reasons, especially if HDD is the main storage media, one
 ```
 ([ -f /dev/shm/ggml-base.en.bin ] || cp /path/to/your/local/whisper.cpp/models/ggml* /dev/shm/)
 ```
+
+At this stage the extension, while useful, is a bit more than a "convenience hack" and can be improved dramatically by a seasoned GNOME developer who may find a better way than the hacky spawning a command line process to fill the clipboard.
+A virtual keyboard device implementing a legitimate IBus input method to send the text to a target text field is another direction for improvement, although I have no idea how to spy the field in focus, outside of the hacky nature of `xdotoll` and such.
 
 ### Credits
 * Open AI (for [Whisper](https://github.com/openai/whisper))
