@@ -11,6 +11,15 @@
 }
 
 .i-label {
+    color: yellow;
     font-size: 16px;
-    font-weight: bold;
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.e-label {
+    color: red;
+    font-size: 16px;
+    padding: 2px;
+    border-radius: 2px;
 }

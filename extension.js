@@ -43,9 +43,18 @@ function enable() {
         settings,
         Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,
         Shell.ActionMode.NORMAL,
-        () => {GLib.spawn_command_line_async(homeDir+"/"+asr_path);}
-    );
-
+		async() => { try {
+			siLabel.set_style_class_name('i-label');
+			const proc = Gio.Subprocess.new([homeDir+"/"+asr_path],
+				Gio.SubprocessFlags.NONE);
+			const success = await proc.wait_check_async(null);
+			//console.log(`Speech recognizer ${success ? 'succeeded' : 'failed'}`);
+			siLabel.set_style_class_name(success ? 'si-label' : 'e-label');
+			} catch (e) {
+			logError(e);
+			}
+		}
+		);
 }
 
 function disable() {

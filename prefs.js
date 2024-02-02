@@ -45,7 +45,7 @@ When the microphone icon disappears, the transcribed text can be pasted immediat
 * Edit the configuration section of the <b>wsi</b> script to match your environment, point to the Whisper model of choice, etc.\n\n \
 * Check the gschema.xml file for the invocation keyboard shortcut and modify the key combination if needed.\n \
  The schema then has to be recompiled with '<b>glib-compile-schemas schemas/</b>' from the command line in the extension folder.\n\n \
-* Note that depending on noise environment, the silence level may need to be adjusted in the '<b>sox</b>' command.\n\n \
+* Note that depending on noise environment, the silence threshold may need to be adjusted in the '<b>sox</b>' command.\n\n \
 More details and instructions on <a href='https://github.com/QuantiusBenignus/blurt'>GitHub</a>\n \
 2024, \u{00A9}<a href='https://github.com/QuantiusBenignus'>Quantius Benignus</a>"  );
 		textL.set_name("i-label");
