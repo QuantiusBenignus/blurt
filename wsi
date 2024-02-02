@@ -1,5 +1,6 @@
 #!/usr/bin/zsh
-# Copyright (c) 2023 Quantius Benignus
+# Copyright (c) 2024 Quantius Benignus
+# 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,8 +30,9 @@ set -e
 
 # Store temp files in memory for speed and to reduce SSD/HDD "grinding":
 TEMPD='/dev/shm'
-# Default whisper.cpp model file for inference (replace with the path to your whisper.cpp models):
-model="$HOME/Path/to/your/whisper/models/ggml-base.en.bin"
+# Default whisper.cpp model file for inference:
+#model="$HOME/AI/Models/whisper/ggml-tiny.en.bin"
+model="$HOME/AI/Models/whisper/ggml-base.en.bin"
 # Hardcoded temp wav file to store the voice memo and get overwritten every time (in RAM):
 ramf="$TEMPD/wfile"
 
@@ -40,7 +42,7 @@ NTHR=8
 #NTHR="$(( $(lscpu | awk '/^Socket\(s\)/{ print $2 }') * $(lscpu | awk '/^Core\(s\) per socket/{ print $4 }') ))"
 #--------------------------------------------------------------------------
 
-rec -q -t wav $ramf rate 16k silence 1 0.1 1% 1 2.0 7%  2>/dev/null
+rec -q -t wav $ramf rate 16k silence 1 0.1 1% 1 2.0 6%  2>/dev/null
  
 str="$(transcribe -t $NTHR -nt -m $model -f $ramf 2>/dev/null)" 
 
@@ -61,10 +63,12 @@ else
  #
  case "$wm" in
     "x11")
-        { echo $str | xsel -ip } || { command -v xsel &>/dev/null || { echo "We rely on xsel for the clipboard. Please, install xsel." >&2 ; exit 1 ; } }
+	command -v xsel &>/dev/null || { echo "We rely on xsel for the clipboard. Please, install xsel." >&2 ; exit 1 ; }
+        echo $str | xsel -ip
         ;;
     "wayland")
-        { echo $str | wl-copy -p } || { command -v wl-copy &>/dev/null || { echo "wl-copy is needed for the clipboard. Please, install wl-copy" >&2 ; exit 1 ; } }
+	command -v wl-copy &>/dev/null || { echo "wl-copy is needed for the clipboard. Please, install wl-copy" >&2 ; exit 1 ; } 
+        echo $str | wl-copy -p 
         ;;
     *)
         echo $str
