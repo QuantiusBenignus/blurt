@@ -51,7 +51,12 @@ str="${str/\(*\)}"
 str="${str/\[*\]}"
 str="${str#$'\n'}"    
 str="${str#$'\n'}"    
-#str="${str//'\n'/'\\n'}"
+#This is stricltly zsh:    
+str="${str#*([[:space:]])}"
+str="${(u)str}"
+# For bash, comment the last 2 lines above and use this instead (I think):
+#str="${string##+([[:space:]])}"
+#str="${str^}"
 #We have a result, now we make a few decisions:
 #If this is somehow run in a text console: 
 if [[ -z "${DISPLAY}" ]] || [[ -z "${DESKTOP_SESSION}" ]] || [[ -z "${XDG_CURRENT_DESKTOP}" ]]; then
