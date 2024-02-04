@@ -12,7 +12,9 @@ The convenience that this extension affords is demonstrated in this screencast (
 
 <video width="348" height="349" src="https://github.com/QuantiusBenignus/blurt/assets/120202899/b05f0829-1f45-40ec-853c-4cadb43a403e"></video>
 
-(A sample with audio can be found [here](resources/smallscr.mp4))
+
+< video src="https://github.com/QuantiusBenignus/blurt/assets/120202899/b8632257-4c17-4e48-befd-9c2e1db2ac8e"></video>
+
 
 #### SYSTEM SETUP
 
