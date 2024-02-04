@@ -24,7 +24,9 @@ The convenience that this extension affords is demonstrated in this screencast (
 *(Assuming whisper.cpp is installed and the "main" executable compiled with 'make' in the cloned whisper.cpp repo. See Prerequisites section)*
 * Place the script **wsi** in $HOME/.local/bin  ( **It is advisable to run this script once from the command line to let it check for its dependencies** )
 * Create a symbolic link (the code expects 'transcribe' in your PATH) to the compiled "main" executable in the whisper.cpp directory. For example, create it in your `$HOME/.local/bin`  with 
-```ln -s /full/path/to/whisper.cpp/main $HOME/.local/bin/transcribe```.
+```
+ln -s /full/path/to/whisper.cpp/main $HOME/.local/bin/transcribe
+```
  * If you are installing the Blurt GNOME extension manually, place the extracted folder `blurt@quantiousbenignus.local` into `$HOME/.local/share/gnome-shell/extensions` and enable it from your `Extensions` system app or from the command line with
 ```
 gnome-extensions enable blurt@quantiusbenignus.local
