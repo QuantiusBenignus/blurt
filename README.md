@@ -31,7 +31,10 @@ ln -s /full/path/to/whisper.cpp/main $HOME/.local/bin/transcribe
 ```
 gnome-extensions enable blurt@quantiusbenignus.local
 ```
- provided that it is detected by the system, which can be checked by inspecting the output of `gnome-extensions list`
+ provided that it is detected by the system, which can be checked by inspecting the output of 
+ ```
+ gnome-extensions list
+```
  
 ##### CONFIGURATION
 Inside the **wsi** script, near the begining, there is a clearly marked section, named **"USER CONFIGURATION BLOCK"**, where all the user-configurable variables (described in the following section) have been collected. 
