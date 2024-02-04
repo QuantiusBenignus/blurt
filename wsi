@@ -30,9 +30,9 @@ set -e
 
 # Store temp files in memory for speed and to reduce SSD/HDD "grinding":
 TEMPD='/dev/shm'
-# Default whisper.cpp model file for inference (PLEASE UPDATE WITH YOUR MODEL LOCATION):
-#model="$HOME/AI/Models/whisper/ggml-tiny.en.bin"
-model="$HOME/AI/Models/whisper/ggml-base.en.bin"
+# Default whisper.cpp model file for inference (PLEASE UPDATE WITH THE LOCATION OF YOUR WHISPER.CPP MODELS):
+#model="$HOME/YOUR_AI_MODEL-FILES/Models/whisper/ggml-tiny.en.bin"
+model="$HOME/YOUR_AI_MODEL-FILES/Models/whisper/ggml-base.en.bin"
 # Hardcoded temp wav file to store the voice memo and get overwritten every time (in RAM):
 ramf="$TEMPD/wfile"
 
@@ -51,11 +51,11 @@ str="${str/\(*\)}"
 str="${str/\[*\]}"
 str="${str#$'\n'}"    
 str="${str#$'\n'}"    
-#This is stricltly zsh:    
+#This is strictly zsh:    
 str="${str#*([[:space:]])}"
 str="${(u)str}"
 # For bash, comment the last 2 lines above and use this instead (I think):
-#str="${string##+([[:space:]])}"
+#str="${str##+([[:space:]])}"
 #str="${str^}"
 #We have a result, now we make a few decisions:
 #If this is somehow run in a text console: 
