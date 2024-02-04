@@ -41,7 +41,8 @@ Inside the **wsi** script, near the begining, there is a clearly marked section,
 Most can be left as is but the important one is the location of the whisper.cpp model file that you would like to use during transcription.
 The location of the **wsi** script (should be in your $PATH) can be changed from the "Preferences" dialog, accessible by the system `Extensions` app or by clicking on the `Blurt` (&#x0181;) top bar indicator label.
 ![Preferences screenshot](resources/prefs.png)
-The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and modify it as desired. The schema then has to be recompiled with ```glib-compile-schemas schemas/``` from the command line in the extension folder
+The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and modify it as desired. The schema then has to be recompiled with 
+```glib-compile-schemas schemas/``` from the command line in the extension folder
 
 ##### Notes
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp:
