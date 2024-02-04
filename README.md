@@ -27,8 +27,9 @@ The convenience that this extension affords is demonstrated in this screencast (
 ```ln -s /full/path/to/whisper.cpp/main $HOME/.local/bin/transcribe```.
  * If you are installing the Blurt GNOME extension manually, place the extracted folder `blurt@quantiousbenignus.local` into `$HOME/.local/share/gnome-shell/extensions` and enable it from your `Extensions` system app or from the command line with
 ```
-   gnome-extensions enable blurt@quantiusbenignus.local
-```, provided that it is detected by the system, which can be checked by inspecting the output of `gnome-extensions list`
+gnome-extensions enable blurt@quantiusbenignus.local
+```
+ provided that it is detected by the system, which can be checked by inspecting the output of `gnome-extensions list`
  
 ##### CONFIGURATION
 Inside the **wsi** script, near the begining, there is a clearly marked section, named **"USER CONFIGURATION BLOCK"**, where all the user-configurable variables (described in the following section) have been collected. 
