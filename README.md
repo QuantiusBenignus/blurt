@@ -1,4 +1,4 @@
-** PLEASE NOTE: THIS BRANCH (gshell_45) CONTAINS CODE SPECIFIC TO VERSION 45 OF THE GNOME SHELL AND WILL NOT WORK WITH EARLIER VERSIONS**
+**PLEASE NOTE: THIS BRANCH (gshell_45) CONTAINS CODE SPECIFIC TO VERSION 45 OF THE GNOME SHELL AND WILL NOT WORK WITH EARLIER VERSIONS**
 # Blurt - a Gnome shell extension for accurate speech input in Linux
 
 **Blurt**  is a simple Gnome shell extension based on the command line utility [NoteWhispers](https://github.com/quantiusbenignus/NoteWhispers), which itself, is built around the great [whisper.cpp](https://github.com/ggerganov/whisper.cpp).  
