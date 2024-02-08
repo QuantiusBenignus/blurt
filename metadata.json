@@ -1,8 +1,11 @@
 {
+  "description": "Input text from speech anywhere with the middle mouse button",
   "name": "Blurt",
-  "description": "Input text anywhere from speech with the middle mouse button",
-  "uuid": "blurt@quantiusbenignus.local",
   "settings-schema": "org.gnome.shell.extensions.blurt",
-  "shell-version": [ "42", "43" ],
-  "url":"https://github.com/QuantiusBenignus/blurt"
+  "shell-version": [
+    "45"
+  ],
+  "url": "https://github.com/QuantiusBenignus/blurt",
+  "uuid": "blurt@quantiusbenignus.local",
+  "version": 3
 }

@@ -1,56 +1,53 @@
-const GLib = imports.gi.GLib;
-const Gio = imports.gi.Gio;
-const St = imports.gi.St;
-const Main = imports.ui.main;
-const Meta = imports.gi.Meta;
-const Shell = imports.gi.Shell;
-const Eu = imports.misc.extensionUtils;
-const Ce = Eu.getCurrentExtension();
+import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
+import St from 'gi://St';
+import Meta from 'gi://Meta';
+import Shell from 'gi://Shell';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-let siButton, siLabel;
+export default class BlurtExtension extends Extension {
 
-function enable() {     
-		
-	siButton = new St.Button(
-	{
-		style_class : "panel-button"
-	});
-	siLabel = new St.Label({
-		text: '\u{0181}',
-		style_class: 'si-label',
-	});
-    siButton.set_child(siLabel);
-	siButton.connect('button-release-event', function() {
-		Eu.openPrefs();
+enable() {     
+
+    this._siButton = new St.Button(
+    {
+        style_class : "panel-button"
     });
-		
-	Main.panel._rightBox.insert_child_at_index(siButton, 1);
-	let settings = Eu.getSettings();
-	let homeDir = GLib.getenv('HOME');
-	let asr_path = settings.get_string('whisper-path');
+    this._siLabel = new St.Label({
+        text: '\u{0181}',
+        style_class: 'si-label',
+    });
+    this._siButton.set_child(this._siLabel);
+    this._siButton.connect('clicked', () => this.openPreferences());
+	
+    Main.panel._rightBox.insert_child_at_index(this._siButton, 1);
+    this._settings = this.getSettings();
+    let homeDir = GLib.getenv('HOME');
+    let asr_path = this._settings.get_string('whisper-path');
     Main.wm.addKeybinding("speech-input", 
-		settings,
-		Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,
-		Shell.ActionMode.NORMAL,
-		async() => { try {
-			siLabel.set_style_class_name('i-label');
-			const proc = Gio.Subprocess.new([homeDir+"/"+asr_path],
-				Gio.SubprocessFlags.NONE);
-			const success = await proc.wait_check_async(null);
-			//console.log(`Speech recognizer ${success ? 'succeeded' : 'failed'}`);
-			siLabel.set_style_class_name(success ? 'si-label' : 'e-label');
-			} catch (e) {
-			logError(e);
-			}
-		}
-	);
+        this._settings,
+        Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,
+        Shell.ActionMode.NORMAL,
+        async() => { try {
+            this._siLabel.set_style_class_name('i-label');
+            const proc = Gio.Subprocess.new([homeDir+"/"+asr_path],
+                Gio.SubprocessFlags.NONE);
+            const success = await proc.wait_check_async(null);
+            this._siLabel.set_style_class_name(success ? 'si-label' : 'e-label');
+            } catch (e) {
+            logError(e);
+            }
+         }
+    );
 }
 
-function disable() {
-    // Remove the keybinding when the extension is disabled
-	Main.wm.removeKeybinding("speech-input");
-	Main.panel._rightBox.remove_child(siButton);
-	siLabel = null;
-	siButton = null;
+disable() {
+    this._settings = null;
+    Main.wm.removeKeybinding("speech-input");
+    Main.panel._rightBox.remove_child(siButton);
+    this._siLabel = null;
+    this._siButton = null;
 }
 
+}
