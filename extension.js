@@ -45,7 +45,7 @@ enable() {
 disable() {
     this._settings = null;
     Main.wm.removeKeybinding("speech-input");
-    Main.panel._rightBox.remove_child(siButton);
+    Main.panel._rightBox.remove_child(this._siButton);
     this._siLabel = null;
     this._siButton = null;
 }
