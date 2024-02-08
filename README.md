@@ -4,6 +4,8 @@
 **Blurt**  is a simple Gnome shell extension based on the command line utility [NoteWhispers](https://github.com/quantiusbenignus/NoteWhispers), which itself, is built around the great [whisper.cpp](https://github.com/ggerganov/whisper.cpp).
 It is confirmed to work under version 43 of the GNOME shell (the current version on my Linux system).  
 
+**UPDATE: GNOME SHELL version 45 is now supported with the code from the gshell_45 branch.**
+
 When the extension is installed and enabled (indicated with &#x0181; in the top bar), one can input text from speech into any window that has the keyboard focus (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+z> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection/clipboard under X11 or Wayland.
 When speech input is initiated, a microphone indicator icon appears in the top bar and is shown for the duration of the recording. The color of the Extension indicator &#x0181; becomes yellow while recording.
 The disappearance of the microphone icon from the top bar indicates that the process is completed and the extension has "blurted" a snippet of text that can be pasted with the middle mouse button. (Note that on slower systems there may be a slight delay after the microphone icon disappears and before the text reaches the clipboard due to the time needed for transcription. On my computer it is less than 300 ms for an average paragraph of spoken text).
