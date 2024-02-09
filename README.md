@@ -21,7 +21,7 @@ The convenience that this extension affords is demonstrated in this screencast (
 ##### PREREQUISITES:
 - zsh or bash command line shell installation on a LInux system running GNOME.   
 - working whisper.cpp installation (see https://github.com/ggerganov/whisper.cpp
-- The orchestrator tool **wsi** from this repository must be placed in your $HOME/.local/bin/ folder  
+- The orchestrator tool **wsi** from this repository **must be placed in your $HOME/.local/bin/ folder**.  
 - recent versions of 'sox', 'xsel' or 'wl-copy'  command-line tools from your system's repositories.
 -  A working microphone 
 > *DISCLAIMER: Some of the proposed actions, if implemented, will alter how your system works internally (e.g. systemwide temporary file storage and memory management). The author neither takes credit nor assumes any responsibility for any outcome that may or may not result from interacting with the contents of this document. Suggestions in this section are based on the author's choice and opinion and may not fit the taste or the particular situation of everyone; please, adjust as you like.*
