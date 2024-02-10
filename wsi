@@ -1,4 +1,5 @@
 #!/usr/bin/zsh
+#If you replace the shell above with bash, note also lines 56 to 66
 # Copyright (c) 2024 Quantius Benignus
 # 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -30,16 +31,16 @@ set -e
 
 # Store temp files in memory for speed and to reduce SSD/HDD "grinding":
 TEMPD='/dev/shm'
-# Default whisper.cpp model file for inference (PLEASE UPDATE WITH THE LOCATION OF YOUR WHISPER.CPP MODELS):
-#model="$HOME/YOUR_AI_MODEL-FILES/Models/whisper/ggml-tiny.en.bin"
-model="$HOME/YOUR_AI_MODEL-FILES/Models/whisper/ggml-base.en.bin"
+# Default whisper.cpp model file for inference:
+#model="$HOME/AI/Models/whisper/ggml-tiny.en.bin"
+model="$HOME/AI/Models/whisper/ggml-base.en.bin"
 # Hardcoded temp wav file to store the voice memo and get overwritten every time (in RAM):
 ramf="$TEMPD/wfile"
 
 #Set the number of processing threads for whisper.cpp inference (adjust for your case):
-NTHR=8
-#It seems that the optimum number of transcribe threads should equal CPU processing cores:
-#NTHR="$(( $(lscpu | awk '/^Socket\(s\)/{ print $2 }') * $(lscpu | awk '/^Core\(s\) per socket/{ print $4 }') ))"
+#NTHR=8
+#It seems that the optimum number of transcribe threads should equal half CPU processing cores:
+NTHR=$(( $(getconf _NPROCESSORS_ONLN) / 2 ))
 #--------------------------------------------------------------------------
 
 rec -q -t wav $ramf rate 16k silence 1 0.1 1% 1 2.0 6%  2>/dev/null
@@ -50,13 +51,21 @@ str="$(transcribe -t $NTHR -nt -m $model -f $ramf 2>/dev/null)"
 str="${str/\(*\)}"   
 str="${str/\[*\]}"
 str="${str#$'\n'}"    
-str="${str#$'\n'}"    
-#This is strictly zsh:    
-str="${str#*([[:space:]])}"
-str="${(u)str}"
-# For bash, comment the last 2 lines above and use this instead (I think):
-#str="${str##+([[:space:]])}"
-#str="${str^}"
+str="${str#$'\n'}"
+#Prefer the power of zsh, but loose full POSIX compliance.
+if [ -n "$ZSH_NAME" ]; then
+    str="${str#*([[:space:]])}"
+    str="${(u)str}"
+elif [ -n "$BASH" ]; then
+    #Running in bash because you changed the shebang on line 1
+    str="${str##+([[:space:]])}"
+    str="${str^}"
+else
+    echo "Unknown shell, assuming bash compliance"
+    str="${str##+([[:space:]])}"
+    str="${str^}"
+fi
+
 #We have a result, now we make a few decisions:
 #If this is somehow run in a text console: 
 if [[ -z "${DISPLAY}" ]] || [[ -z "${DESKTOP_SESSION}" ]] || [[ -z "${XDG_CURRENT_DESKTOP}" ]]; then
