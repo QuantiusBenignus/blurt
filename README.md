@@ -1,8 +1,9 @@
 
 # <img src="resources/blurt.png" height="36px" width="36px"> Blurt - a Gnome shell extension for accurate speech-to-text input in Linux </img>
-
+[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" align="right">](https://extensions.gnome.org/extension/6742/blurt/)
 **Blurt**  is a simple Gnome shell extension based on the command line utility [NoteWhispers](https://github.com/quantiusbenignus/NoteWhispers), which itself, is built around the great [whisper.cpp](https://github.com/ggerganov/whisper.cpp).
 It is confirmed to work under version 43 of the GNOME shell (the current version on my Linux system).  
+
 
 **UPDATE: GNOME SHELL version 45 is now supported with the code from the gshell_45 branch. Check it out from there or grab the dedicated zip archive from the main branch. Alternatively, it can be directly installed from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), but in all cases, please, do not forget to get the *wsi* script from this repository!** 
 
