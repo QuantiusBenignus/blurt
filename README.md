@@ -53,7 +53,7 @@ The location of the **wsi** script (should be in your $PATH) can be changed from
 The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and modify it as desired. The schema then has to be recompiled with 
 ```glib-compile-schemas schemas/``` from the command line in the extension folder
 
-##### Notes
+##### Tips and Tricks
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp. This is done in **wsi** with this command:
 `rec -t wav $ramf rate 16k silence 1 0.1 3% 1 2.0 6% `
 It will attempt to stop on silence of 2s with signal level threshold of 6%. A very noisy environment will prevent the detection of silence and the recording (of noise) will continue. This is a problem and a remedy that may not work in all cases is to adjust the duration and silence threshold in the sox filter in the `wsi` script. You can't raise the threshold arbitrarily because, if you consistently lower your voice (fadeout) at the end of your speech, it may get cut off if the threshold is high. Lower it in that case to a few %.   
@@ -64,6 +64,23 @@ After the speech is captured, it will be passed to `transcribe` (whisper.cpp) fo
 The script will then parse the text to remove non-speech artifacts, format it and send it to the PRIMARY selection (clipboard) using either X11 or Wayland tools. 
 
 In principle, whisper (and whisper.cpp) **is multilingual** and with the correct model file, this extension will "blurt" out UTF-8 text transcribed in the correct language. In the wsi script, the language choice can be made permanent by using `-l LC` in the `transcribe` call, where LC stands for the language code of choice, for example `-l fr` for french. 
+
+###### Manual speech recording interuption
+For those who want to be able to interupt the recording manually with a key combination, in the spirit of great hacks, we will not even try to rewrite the extension code because... "kiss".
+Instead of writing javascript to fight with shell setups and edge cases when transfering signals from the GNOME shell to a Gio.subprocess in a new bash or zsh shell etc., we are going to, again, use the system built-in features:
+* Open your GNOME system settings and find "Keyboard".
+* Under "Keyboard shortcuts", "View and customize shortcuts"
+* In the new window, scroll down to "Custom Shortcuts" and press it.
+* Press "+" to add a new shortcut and give it a name: "Blurt it already!"
+* In the "Command" field type `pkill --signal 2 rec`
+* Then press "Set Shortcut" and select a (unused) key combination. For example CTRL+ALT+x
+* Click Add and you are done. 
+That Simple.  Just make sure that the new key binding has not been set-up already for something else.
+Now when the extension is recording speech, it can be stopped with the new key combo and transcription will start immediatelly.
+
+For the minimalists, it is trivial to extrapolate from this hack to a complete CLI solution, without a single pixel of GUI video buffering.
+(A simple Adwaita widget window can cost MBs of video memory) 
+Enter [CLIblurt](https://github.com/QuantiusBenignus/cliblurt/)
 
 ##### Temporary directory and files
 Speech-to-text transcription is memory- and CPU-intensive task and fast storage for read and write access can only help. That is why **wsi** stores temporary and resource files in memory, for speed and to reduce SSD/HDD "grinding": `TEMPD='/dev/shm'`. 
