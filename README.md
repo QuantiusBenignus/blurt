@@ -17,9 +17,9 @@ The convenience that this extension affords is demonstrated in this screencast (
 
 <video width="424" height="240" src="https://github.com/QuantiusBenignus/blurt/assets/120202899/0b83afab-c537-404c-a085-96a7c1167961"></video>
 
-#### SYSTEM SETUP
+### SYSTEM SETUP
 
-##### PREREQUISITES:
+#### PREREQUISITES:
 - zsh or bash command line shell installation on a LInux system running GNOME.   
 - working whisper.cpp installation (see https://github.com/ggerganov/whisper.cpp
 - The orchestrator tool **wsi** from this repository **must be placed in your $HOME/.local/bin/ folder**.  
@@ -27,7 +27,7 @@ The convenience that this extension affords is demonstrated in this screencast (
 -  A working microphone 
 > *DISCLAIMER: Some of the proposed actions, if implemented, will alter how your system works internally (e.g. systemwide temporary file storage and memory management). The author neither takes credit nor assumes any responsibility for any outcome that may or may not result from interacting with the contents of this document. Suggestions in this section are based on the author's choice and opinion and may not fit the taste or the particular situation of everyone; please, adjust as you like.*
 
-##### "INSTALLATION"
+#### "INSTALLATION"
 *(Assuming whisper.cpp is installed and the "main" executable compiled with 'make' in the cloned whisper.cpp repo. See Prerequisites section)*
 * Place the script **wsi** in $HOME/.local/bin/  ( **It is advisable to run this script once from the command line to let it check for its dependencies** )
 * Create a symbolic link (the code expects 'transcribe' in your $PATH) to the compiled "main" executable in the whisper.cpp directory. For example, create it in your `$HOME/.local/bin/` (part of your $PATH) with 
@@ -45,7 +45,7 @@ gnome-extensions enable blurt@quantiusbenignus.local
  gnome-extensions list
 ```
  
-##### CONFIGURATION
+#### CONFIGURATION
 Inside the **wsi** script, near the begining, there is a clearly marked section, named **"USER CONFIGURATION BLOCK"**, where all the user-configurable variables (described in the following section) have been collected. 
 Most can be left as is but the important one is the location of the whisper.cpp model file that you would like to use during transcription.
 The location of the **wsi** script (should be in your $PATH) can be changed from the "Preferences" dialog, accessible by the system `Extensions` app or by clicking on the `Blurt` (&#x0181;) top bar indicator label.
@@ -53,7 +53,7 @@ The location of the **wsi** script (should be in your $PATH) can be changed from
 The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and modify it as desired. The schema then has to be recompiled with 
 ```glib-compile-schemas schemas/``` from the command line in the extension folder
 
-##### Tips and Tricks
+#### TIPS AND TRICKS
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp. This is done in **wsi** with this command:
 `rec -t wav $ramf rate 16k silence 1 0.1 3% 1 2.0 6% `
 It will attempt to stop on silence of 2s with signal level threshold of 6%. A very noisy environment will prevent the detection of silence and the recording (of noise) will continue. This is a problem and a remedy that may not work in all cases is to adjust the duration and silence threshold in the sox filter in the `wsi` script. You can't raise the threshold arbitrarily because, if you consistently lower your voice (fadeout) at the end of your speech, it may get cut off if the threshold is high. Lower it in that case to a few %.   
@@ -63,9 +63,9 @@ With good speech signal level, the threshold can then be more effective, since S
 After the speech is captured, it will be passed to `transcribe` (whisper.cpp) for speech recognition. This will happen faster than real time (especially with a fast CPU or if your whisper.cpp installation uses CUDA). One can adjust the number of processing threads used by adding  `-t n` to the command line parameters of transcribe (please, see whisper.cpp documentation). 
 The script will then parse the text to remove non-speech artifacts, format it and send it to the PRIMARY selection (clipboard) using either X11 or Wayland tools. 
 
-In principle, whisper (and whisper.cpp) **is multilingual** and with the correct model file, this extension will "blurt" out UTF-8 text transcribed in the correct language. In the wsi script, the language choice can be made permanent by using `-l LC` in the `transcribe` call, where LC stands for the language code of choice, for example `-l fr` for french. 
+In principle, whisper (whisper.cpp) **is multilingual** and with the correct model file, this extension will "blurt" out UTF-8 text transcribed in the correct language. In the wsi script, the language choice can be made permanent by using `-l LC` in the `transcribe` call, where LC stands for the language code of choice, for example `-l fr` for french. 
 
-###### Manual speech recording interuption
+##### Manual speech recording interuption
 For those who want to be able to interupt the recording manually with a key combination, in the spirit of great hacks, we will not even try to rewrite the extension code because... "kiss".
 Instead of writing javascript to fight with shell setups and edge cases when transfering signals from the GNOME shell to a Gio.subprocess in a new bash or zsh shell etc., we are going to, again, use the system built-in features:
 * Open your GNOME system settings and find "Keyboard".
@@ -97,7 +97,7 @@ For the aforementioned reasons, especially if HDD is the main storage media, one
 At this stage the extension, while useful, is somewhat of a "convenience hack" and can be improved by a seasoned GNOME developer who may find a better way to invoke whisper.cpp and fill the clipboard.
 A virtual keyboard device implementing a legitimate IBus input method to send the text to a target text field is another direction for improvement, although I have no idea how to spy the field in focus, outside of the hacky nature of `xdotoll` and such.
 
-### Credits
+#### Credits
 * Open AI (for [Whisper](https://github.com/openai/whisper))
 * Georgi Gerganov and community ( for Whisper's C/C++ port [whisper.cpp](https://github.com/ggerganov/whisper.cpp))
 * The **sox** developers (for the venerable "Swiss Army knife of sound processing tools")
