@@ -80,7 +80,7 @@ Now when the extension is recording speech, it can be stopped with the new key c
 
 For the minimalists, it is trivial to extrapolate from this hack to a complete CLI solution, without a single pixel of GUI video buffering.
 (A simple Adwaita widget window can cost MBs of video memory) 
-Enter [CLIblurt](https://github.com/QuantiusBenignus/blahst/)
+Enter [BlahST](https://github.com/QuantiusBenignus/blahst/)
 
 ##### Temporary directory and files
 Speech-to-text transcription is memory- and CPU-intensive task and fast storage for read and write access can only help. That is why **wsi** stores temporary and resource files in memory, for speed and to reduce SSD/HDD "grinding": `TEMPD='/dev/shm'`. 
