@@ -7,6 +7,8 @@ It is confirmed to work under version 43 of the GNOME shell (the current version
 
 **UPDATE: GNOME SHELL version 45 is now supported with the code from the gshell_45 branch. Check it out from there or grab the dedicated zip archive from the main branch. Alternatively, it can be directly installed from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), but in all cases, please, do not forget to get the *wsi* script from this repository!** 
 
+[**Now capable of transcribing over a network**](https://github.com/QuantiusBenignus/blurt#network-transcription)
+
 When the extension is installed and enabled (indicated with &#x0181; in the top bar), one can input text from speech into any window that has the keyboard focus (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+z> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection/clipboard under X11 or Wayland.
 When speech input is initiated, a microphone indicator icon appears in the top bar and is shown for the duration of the recording. The color of the Extension indicator &#x0181; becomes yellow while recording.
 The disappearance of the microphone icon from the top bar indicates that the process is completed and the extension has "blurted" a snippet of text that can be pasted with the middle mouse button. (Note that on slower systems there may be a slight delay after the microphone icon disappears and before the text reaches the clipboard due to the time needed for transcription. On my computer it is less than 300 ms for an average paragraph of spoken text).
@@ -52,6 +54,13 @@ The location of the **wsi** script (should be in your $PATH) can be changed from
 ![Preferences screenshot](resources/prefs.png)
 The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and modify it as desired. The schema then has to be recompiled with 
 ```glib-compile-schemas schemas/``` from the command line in the extension folder
+
+###### Network transcription
+This would be useful for Linux systems that run GNOME but do not have the power to transcribe speech efficiently. 
+Speech is then recorded on the local machine and sent over to a running instance of whisper.cpp [server](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server), typically on the local network.
+One should change the **wsi** script with **netwsi**, either from the extension preferences, or by simply renaming the scripts.
+**netwsi** can also be found in this repository and should be placed in $HOME/.local/bin. Please, run it from the command line first to check for its dependencies and have them installed.
+The IP and port number for the server should be entered in the configuration block of the script.
 
 #### TIPS AND TRICKS
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp. This is done in **wsi** with this command:
