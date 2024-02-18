@@ -58,9 +58,16 @@ The keyboard shortcut to initiate speech input can also be modified if necessary
 ###### Network transcription
 This would be useful for Linux systems that run GNOME but do not have the power to transcribe speech efficiently. 
 Speech is then recorded on the local machine and sent over to a running instance of whisper.cpp [server](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server), typically on the local network.
+
 One should change the **wsi** script with **netwsi**, either from the extension preferences, or by simply renaming the scripts.
-**netwsi** can also be found in this repository and should be placed in $HOME/.local/bin. Please, run it from the command line first to check for its dependencies and have them installed.
+
+**netwsi** can also be found in this repository and should be placed in $HOME/.local/bin. 
+
 The IP and port number for the server should be entered in the configuration block of the script.
+
+The script will check that a running server is present at the specified IP and complain if not found.
+
+Please, run the script from the command line first to check for its dependencies and have them installed.
 
 #### TIPS AND TRICKS
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp. This is done in **wsi** with this command:
