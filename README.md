@@ -55,20 +55,6 @@ The location of the **wsi** script (should be in your $PATH) can be changed from
 The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and modify it as desired. The schema then has to be recompiled with 
 ```glib-compile-schemas schemas/``` from the command line in the extension folder
 
-###### Network transcription
-This would be useful for Linux systems that run GNOME but do not have the power to transcribe speech efficiently. 
-Speech is then recorded on the local machine and sent over to a running instance of whisper.cpp [server](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server), typically on the local network.
-
-One should change the **wsi** script with **netwsi**, either from the extension preferences, or by simply renaming the scripts.
-
-**netwsi** can also be found in this repository and should be placed in $HOME/.local/bin. 
-
-The IP and port number for the server should be entered in the configuration block of the script.
-
-The script will check that a running server is present at the specified IP and complain if not found.
-
-Please, run the script from the command line first to check for its dependencies and have them installed.
-
 #### TIPS AND TRICKS
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp. This is done in **wsi** with this command:
 `rec -t wav $ramf rate 16k silence 1 0.1 3% 1 2.0 6% `
@@ -97,6 +83,20 @@ Now when the extension is recording speech, it can be stopped with the new key c
 For the minimalists, it is trivial to extrapolate from this hack to a complete CLI solution, without a single pixel of GUI video buffering.
 (A simple Adwaita widget window can cost MBs of video memory) 
 Enter [BlahST](https://github.com/QuantiusBenignus/blahst/)
+
+##### Network transcription
+This would be useful for Linux systems that run GNOME but do not have the power to transcribe speech efficiently. 
+Speech is recorded on the local machine and sent over to a running instance of whisper.cpp [server](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server), typically on the local network.
+
+To make the extension work in network transcription mode, one should change the **wsi** script with **netwsi**, either from the extension preferences, or by simply renaming the scripts.
+
+**netwsi** can be found in this repository and should also be placed in $HOME/.local/bin. 
+
+The IP and port number for the server should be entered in the configuration block of the script.
+
+The script will check that a running server is present at the specified IP and complain if not found. To properly set up the server, please, look at its [documentation](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
+
+Please, run the script from the command line first to check for its dependencies and have them installed.
 
 ##### Temporary directory and files
 Speech-to-text transcription is memory- and CPU-intensive task and fast storage for read and write access can only help. That is why **wsi** stores temporary and resource files in memory, for speed and to reduce SSD/HDD "grinding": `TEMPD='/dev/shm'`. 
