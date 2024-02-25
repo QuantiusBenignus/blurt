@@ -44,6 +44,6 @@ Seems like there is extra advantage to running a local server with the model pre
 Seeing this consistently, I would recommend using this **network** mode of operation of Blurt. 
 Just use the netwsi script, which makes a call to whisper.cpp **server** (server should be compiled along with main in your whisper.cpp repo).
 That means that the server instance must be started on login (on local machine) or available on your LAN. 
-(Calling the whisper.cpp server over the open internet may not be a good idea, since, not only the latency will increase but, among other factors, there is no encryption of the speech data.)
+(Calling the whisper.cpp server over the open internet may not be a good idea, since, not only the latency will increase but, among other security factors, there is no encryption of the speech data and the server implementation does not sanitize the calls in any way.)
 
 An example for setting up the server with the desired model and other runtime parameters is available [here](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
