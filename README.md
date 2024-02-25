@@ -30,9 +30,16 @@ The convenience that this extension affords is demonstrated in this screencast (
 > *DISCLAIMER: Some of the proposed actions, if implemented, will alter how your system works internally (e.g. systemwide temporary file storage and memory management). The author neither takes credit nor assumes any responsibility for any outcome that may or may not result from interacting with the contents of this document. Suggestions in this section are based on the author's choice and opinion and may not fit the taste or the particular situation of everyone; please, adjust as you like.*
 
 #### "INSTALLATION"
-*(Assuming whisper.cpp is installed and the "main" executable compiled with 'make' in the cloned whisper.cpp repo. See Prerequisites section)*
-* Place the script(s) **wsi**, **netwsi** in $HOME/.local/bin/  ( **It is advisable to run the script once from the command line to let it check for its dependencies** )
-* Create a symbolic link (the code expects 'transcribe' in your $PATH) to the compiled "main" executable in the whisper.cpp directory. For example, create it in your `$HOME/.local/bin/` (part of your $PATH) with 
+
+*(Assuming whisper.cpp is installed and the "main" and "server" executables compiled with 'make' in the cloned whisper.cpp repo. See Prerequisites section)*
+* Place the scripts **wsi** and **netwrsi** in $HOME/.local/bin/
+* Make them executable
+  ```
+  cd $HOME/.local/bin; chmod +x wsi wrsi netwrsi
+  ```
+* Run once from the command line to let the script(s) check for required dependencies
+* If using local whisper.cpp, create a symbolic link (the code expects 'transcribe' in your $PATH) to the compiled "main" executable in the whisper.cpp directory.
+  For example, create it in your `$HOME/.local/bin/` (part of your $PATH) with 
 ```
 ln -s /full/path/to/whisper.cpp/main $HOME/.local/bin/transcribe
 ```
