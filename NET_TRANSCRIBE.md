@@ -1,6 +1,6 @@
 # Network Transcription (recommended mode)
 This would be useful for Linux systems that run GNOME but do not have the power to transcribe speech efficiently.
-In addition, it also shows speedup of local transcription on faster machines which run a whisper.cpp sevrer on localhost. See below.
+In addition, it also shows speedup of local transcription on faster machines which run a whisper.cpp server on localhost. See below.
 
 ### Setup
 Speech is recorded on the local machine and sent over to a running instance of whisper.cpp [server](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server), typically on the local network.
