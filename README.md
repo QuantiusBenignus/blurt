@@ -7,7 +7,7 @@ It is confirmed to work under version 43 of the GNOME shell (the current version
 
 **UPDATE: GNOME SHELL version 45 is now supported with the code from the gshell_45 branch. Check it out from there or grab the dedicated zip archive from the main branch. Alternatively, it can be directly installed from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), but in all cases, please, do not forget to get the *wsi* script from this repository!** 
 
-[**Now capable of transcribing over a network**](https://github.com/QuantiusBenignus/blurt/NET_TRANSCRIBE.md) - speedier and recommended.
+[**Now capable of transcribing over a network**](./NET_TRANSCRIBE.md) - speedier and recommended.
 
 When the extension is installed and enabled (indicated with &#x0181; in the top bar), one can input text from speech into any window that has the keyboard focus (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+z> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection/clipboard under X11 or Wayland.
 When speech input is initiated, a microphone indicator icon appears in the top bar and is shown for the duration of the recording. The color of the Extension indicator &#x0181; becomes yellow while recording.
