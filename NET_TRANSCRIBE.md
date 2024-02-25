@@ -42,8 +42,8 @@ This is almost **90x-faster-than-real-time** (~140 ms for a 12.5s speech clip). 
 Seems like there is extra advantage to running a local server with the model preloaded.
 
 Seeing this consistently, I would recommend using this **network** mode of operation of Blurt. 
-Just use the netwsi script, which makes a call to whisper.cpp **server** (should be compiled along with main in your whisper.cpp repo).
+Just use the netwsi script, which makes a call to whisper.cpp **server** (server should be compiled along with main in your whisper.cpp repo).
 That means that the server instance must be started on login (on local machine) or available on your LAN. 
-(Using it in the open internet may not be a good idea, since, not only the latency will increase but, among other factors, there is no encryption to the speech. )
+(Calling the whisper.cpp server over the open internet may not be a good idea, since, not only the latency will increase but, among other factors, there is no encryption of the speech data.)
 
 An example for setting up the server with the desired model and other runtime parameters is available [here](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
