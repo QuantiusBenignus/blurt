@@ -38,10 +38,12 @@ And the request itself (timed to stderr with curl itself, tcurl is just a shell 
 ![Screenshot from 2024-02-22 11-58-06](https://github.com/QuantiusBenignus/blurt/assets/120202899/6f0b352a-b8dd-424d-a3e9-9727dd4ba4eb)
 
 
-This is almost **90x-faster-than-real-time** (~140 ms for a 12.5s speech clip). Loading the model takes about 110 ms for the "main" executable, which does not account to this big difference (3 times).
-Seems like there is extra  advantage to running a local server with the model preloaded.
+This is almost **90x-faster-than-real-time** (~140 ms for a 12.5s speech clip). Loading the model takes about 110 ms for the "main" executable, which does not account for this big difference (3 times).
+Seems like there is extra advantage to running a local server with the model preloaded.
 
 Seeing this consistently, I would recommend using this **network** mode of operation of Blurt. 
 Just use the netwsi script, which makes a call to whisper.cpp **server** (should be compiled along with main in your whisper.cpp repo).
-That means that the server instance must be started on login (on local machine) or available on your LAN. (Using it in the open internet may not be a good idea, since, among other factors, there is no encryption to the speech)
+That means that the server instance must be started on login (on local machine) or available on your LAN. 
+(Using it in the open internet may not be a good idea, since, not only the latency will increase but, among other factors, there is no encryption to the speech. )
+
 An example for setting up the server with the desired model and other runtime parameters is available [here](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
