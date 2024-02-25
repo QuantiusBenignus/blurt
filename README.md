@@ -7,7 +7,7 @@ It is confirmed to work under version 43 of the GNOME shell (the current version
 
 **UPDATE: GNOME SHELL version 45 is now supported with the code from the gshell_45 branch. Check it out from there or grab the dedicated zip archive from the main branch. Alternatively, it can be directly installed from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), but in all cases, please, do not forget to get the *wsi* script from this repository!** 
 
-[**Now capable of transcribing over a network**](https://github.com/QuantiusBenignus/blurt#network-transcription)
+[**Now capable of transcribing over a network**](https://github.com/QuantiusBenignus/blurt/NET_TRANSCRIBE.md) - speedier and recommended.
 
 When the extension is installed and enabled (indicated with &#x0181; in the top bar), one can input text from speech into any window that has the keyboard focus (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+z> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection/clipboard under X11 or Wayland.
 When speech input is initiated, a microphone indicator icon appears in the top bar and is shown for the duration of the recording. The color of the Extension indicator &#x0181; becomes yellow while recording.
@@ -84,19 +84,6 @@ For the minimalists, it is trivial to extrapolate from this hack to a complete C
 (A simple Adwaita widget window can cost MBs of video memory) 
 Enter [BlahST](https://github.com/QuantiusBenignus/blahst/)
 
-##### Network transcription
-This would be useful for Linux systems that run GNOME but do not have the power to transcribe speech efficiently. 
-Speech is recorded on the local machine and sent over to a running instance of whisper.cpp [server](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server), typically on the local network.
-
-To make the extension work in network transcription mode, one should change the **wsi** script with **netwsi**, either from the extension preferences, or by simply renaming the scripts.
-
-**netwsi** can be found in this repository and should also be placed in $HOME/.local/bin. 
-
-The IP and port number for the server should be entered in the configuration block of the script.
-
-The script will check that a running server is present at the specified IP and complain if not found. To properly set up the server, please, look at its [documentation](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
-
-Please, run the script from the command line first to check for its dependencies and have them installed.
 
 ##### Temporary directory and files
 Speech-to-text transcription is memory- and CPU-intensive task and fast storage for read and write access can only help. That is why **wsi** stores temporary and resource files in memory, for speed and to reduce SSD/HDD "grinding": `TEMPD='/dev/shm'`. 
