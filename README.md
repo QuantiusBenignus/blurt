@@ -5,9 +5,9 @@
 It is confirmed to work under version 43 of the GNOME shell (the current version on my Linux system).  
 
 
-**UPDATE: GNOME SHELL version 45 is now supported (gshell_45 branch). Check it out from there or grab the zip archive from the main branch. It can also be installed directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), but in all cases, please, do not forget to get the *wsi* (or [netwsi](./NET_TRANSCRIBE.md)) script from this repository!** 
+**UPDATE: GNOME SHELL version 45 is supported (gshell_45 branch). Check it out from there or grab the zip archive from the main branch. It can also be installed directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), **but in all cases, please, do not forget to get the "wsi" (or [netwsi](./NET_TRANSCRIBE.md)) script from this repository!** 
 
-[**Now capable of transcribing over a network**](./NET_TRANSCRIBE.md) - speedier and recommended.
+[**UPDATE: Now capable of transcribing over a network**](./NET_TRANSCRIBE.md) - speedier and recommended.
 
 When the extension is installed and enabled (indicated with &#x0181; in the top bar), one can input text from speech into any window that has the keyboard focus (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+z> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection/clipboard under X11 or Wayland.
 When speech input is initiated, a microphone indicator icon appears in the top bar and is shown for the duration of the recording. The color of the Extension indicator &#x0181; becomes yellow while recording.
@@ -23,16 +23,15 @@ The convenience that this extension affords is demonstrated in this screencast (
 
 #### PREREQUISITES:
 - zsh or bash command line shell installation on a LInux system running GNOME.   
-- working whisper.cpp installation (see https://github.com/ggerganov/whisper.cpp
-- The orchestrator tool **wsi** (or **netwsi** - see [here](./NET_TRANSCRIBE.md) ) from this repository **must be placed in your $HOME/.local/bin/ folder**.  
-- recent versions of 'sox', 'xsel' or 'wl-copy' (for Wayland)  command-line tools from your system's repositories.
+- working whisper.cpp installation (see https://github.com/ggerganov/whisper.cpp 
+- recent versions of 'sox', 'xsel' (or 'wl-copy' for Wayland)  command-line tools from your system's repositories.
 -  A working microphone 
 > *DISCLAIMER: Some of the proposed actions, if implemented, will alter how your system works internally (e.g. systemwide temporary file storage and memory management). The author neither takes credit nor assumes any responsibility for any outcome that may or may not result from interacting with the contents of this document. Suggestions in this section are based on the author's choice and opinion and may not fit the taste or the particular situation of everyone; please, adjust as you like.*
 
 #### "INSTALLATION"
 
 *(Assuming whisper.cpp is installed and the "main" and "server" executables compiled with 'make' in the cloned whisper.cpp repo. See Prerequisites section)*
-* Place the scripts **wsi** and **netwrsi** in $HOME/.local/bin/
+* Place the orchestrator scripts **wsi** and **[netwrsi](./NET_TRANSCRIBE.md)** in $HOME/.local/bin/
 * Make them executable
   ```
   cd $HOME/.local/bin; chmod +x wsi wrsi netwrsi
