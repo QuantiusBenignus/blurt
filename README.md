@@ -24,14 +24,14 @@ The convenience that this extension affords is demonstrated in this screencast (
 #### PREREQUISITES:
 - zsh or bash command line shell installation on a LInux system running GNOME.   
 - working whisper.cpp installation (see https://github.com/ggerganov/whisper.cpp
-- The orchestrator tool **wsi** from this repository **must be placed in your $HOME/.local/bin/ folder**.  
-- recent versions of 'sox', 'xsel' or 'wl-copy'  command-line tools from your system's repositories.
+- The orchestrator tool **wsi** (or **netwrsi** - see [here](./NET_TRANSCRIBE.md) ) from this repository **must be placed in your $HOME/.local/bin/ folder**.  
+- recent versions of 'sox', 'xsel' or 'wl-copy' (for Wayland)  command-line tools from your system's repositories.
 -  A working microphone 
 > *DISCLAIMER: Some of the proposed actions, if implemented, will alter how your system works internally (e.g. systemwide temporary file storage and memory management). The author neither takes credit nor assumes any responsibility for any outcome that may or may not result from interacting with the contents of this document. Suggestions in this section are based on the author's choice and opinion and may not fit the taste or the particular situation of everyone; please, adjust as you like.*
 
 #### "INSTALLATION"
 *(Assuming whisper.cpp is installed and the "main" executable compiled with 'make' in the cloned whisper.cpp repo. See Prerequisites section)*
-* Place the script **wsi** in $HOME/.local/bin/  ( **It is advisable to run this script once from the command line to let it check for its dependencies** )
+* Place the script(s) **wsi**, **netwsi** in $HOME/.local/bin/  ( **It is advisable to run the script once from the command line to let it check for its dependencies** )
 * Create a symbolic link (the code expects 'transcribe' in your $PATH) to the compiled "main" executable in the whisper.cpp directory. For example, create it in your `$HOME/.local/bin/` (part of your $PATH) with 
 ```
 ln -s /full/path/to/whisper.cpp/main $HOME/.local/bin/transcribe
@@ -48,7 +48,7 @@ gnome-extensions enable blurt@quantiusbenignus.local
 ```
  
 #### CONFIGURATION
-Inside the **wsi** script, near the begining, there is a clearly marked section, named **"USER CONFIGURATION BLOCK"**, where all the user-configurable variables (described in the following section) have been collected. 
+Inside the **wsi** (or **netwsi**) script, near the begining, there is a clearly marked section, named **"USER CONFIGURATION BLOCK"**, where all the user-configurable variables (described in the following section) have been collected. 
 Most can be left as is but the important one is the location of the whisper.cpp model file that you would like to use during transcription.
 The location of the **wsi** script (should be in your $PATH) can be changed from the "Preferences" dialog, accessible by the system `Extensions` app or by clicking on the `Blurt` (&#x0181;) top bar indicator label.
 ![Preferences screenshot](resources/prefs.png)
@@ -58,7 +58,10 @@ The keyboard shortcut to initiate speech input can also be modified if necessary
 #### TIPS AND TRICKS
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp. This is done in **wsi** with this command:
 `rec -t wav $ramf rate 16k silence 1 0.1 3% 1 2.0 6% `
-It will attempt to stop on silence of 2s with signal level threshold of 6%. A very noisy environment will prevent the detection of silence and the recording (of noise) will continue. This is a problem and a remedy that may not work in all cases is to adjust the duration and silence threshold in the sox filter in the `wsi` script. You can't raise the threshold arbitrarily because, if you consistently lower your voice (fadeout) at the end of your speech, it may get cut off if the threshold is high. Lower it in that case to a few %.   
+It will attempt to stop on silence of 2s with signal level threshold of 6%. A very noisy environment will prevent the detection of silence and the recording (of noise) will continue. This is a problem and a remedy that may not work in all cases is to adjust the duration and silence threshold in the sox filter in the `wsi` script. 
+**You can use the manual interuption method below if preferred**
+
+You can't raise the threshold arbitrarily because, if you consistently lower your voice (fadeout) at the end of your speech, it may get cut off if the threshold is high. Lower it in that case to a few %.    
 It is best to try to make the speech distinguishable from noise by amplitude (speak clearly, close to the microphone), while minimizing external noise (sheltered location of the microphone, noise canceling hardware etc.)
 With good speech signal level, the threshold can then be more effective, since SNR (speech-to-noise ratio:-) is effectively increased. 
 
@@ -82,8 +85,7 @@ Now when the extension is recording speech, it can be stopped with the new key c
 
 For the minimalists, it is trivial to extrapolate from this hack to a complete CLI solution, without a single pixel of GUI video buffering.
 (A simple Adwaita widget window can cost MBs of video memory) 
-Enter [BlahST](https://github.com/QuantiusBenignus/blahst/)
-
+Enter [BlahST](https://github.com/QuantiusBenignus/blahst/) - this more universal, lightweight tool configured for server-client transcription, has replaced Blurt completely for me.
 
 ##### Temporary directory and files
 Speech-to-text transcription is memory- and CPU-intensive task and fast storage for read and write access can only help. That is why **wsi** stores temporary and resource files in memory, for speed and to reduce SSD/HDD "grinding": `TEMPD='/dev/shm'`. 
