@@ -5,7 +5,7 @@
 It is confirmed to work under version 43 of the GNOME shell (the current version on my Linux system).  
 
 
-**UPDATE: GNOME SHELL version 45 is now supported with the code from the gshell_45 branch. Check it out from there or grab the dedicated zip archive from the main branch. Alternatively, it can be directly installed from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), but in all cases, please, do not forget to get the *wsi* script from this repository!** 
+**UPDATE: GNOME SHELL version 45 is now supported (gshell_45 branch). Check it out from there or grab the zip archive from the main branch. It can also be installed directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), but in all cases, please, do not forget to get the *wsi* (or [netwsi](./NET_TRANSCRIBE.md)) script from this repository!** 
 
 [**Now capable of transcribing over a network**](./NET_TRANSCRIBE.md) - speedier and recommended.
 
@@ -24,7 +24,7 @@ The convenience that this extension affords is demonstrated in this screencast (
 #### PREREQUISITES:
 - zsh or bash command line shell installation on a LInux system running GNOME.   
 - working whisper.cpp installation (see https://github.com/ggerganov/whisper.cpp
-- The orchestrator tool **wsi** (or **netwrsi** - see [here](./NET_TRANSCRIBE.md) ) from this repository **must be placed in your $HOME/.local/bin/ folder**.  
+- The orchestrator tool **wsi** (or **netwsi** - see [here](./NET_TRANSCRIBE.md) ) from this repository **must be placed in your $HOME/.local/bin/ folder**.  
 - recent versions of 'sox', 'xsel' or 'wl-copy' (for Wayland)  command-line tools from your system's repositories.
 -  A working microphone 
 > *DISCLAIMER: Some of the proposed actions, if implemented, will alter how your system works internally (e.g. systemwide temporary file storage and memory management). The author neither takes credit nor assumes any responsibility for any outcome that may or may not result from interacting with the contents of this document. Suggestions in this section are based on the author's choice and opinion and may not fit the taste or the particular situation of everyone; please, adjust as you like.*
