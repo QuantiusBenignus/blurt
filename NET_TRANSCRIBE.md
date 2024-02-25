@@ -30,11 +30,13 @@ There is more-than-expected speedup (much more than what can be attributed to th
 Before, I was getting ~30x-faster-than-realtime transcription with a local whisper.cpp (**main** executable) instance that was loading the model file on each call instead of keeping it loaded in memory.
 Take a look at the transcription speed when a call to a local whisper.cpp **server** instance is made (excluding the time for speech input, the curl call takes the bulk of the time in my tools, so its timing is the bigest contributor to speed of transcription ):
 
-The first screenshot shows that the server instance (on localhost) is processing a 12.5 second speech clip, using 8 threads and assisted by GPU with CUDA.
+The first screenshot shows that the server instance (on localhost) is processing a 12.5 second speech clip, using 8 threads and assisted by GPU with CUDA:
+
 ![Screenshot from 2024-02-22 11-55-52](https://github.com/QuantiusBenignus/blurt/assets/120202899/0e601ea2-9743-42e3-b7b5-f1cd0ca96351)
 
 
-And the request itself (timed to stderr with curl itself, tcurl is just a shell function wrapper to curl with timing feedback turned on) shows ~140 ms of total transcription time
+And the request itself (timed to stderr with curl itself, tcurl is just a shell function wrapper to curl with timing feedback turned on) shows ~140 ms of total transcription time:
+
 ![Screenshot from 2024-02-22 11-58-06](https://github.com/QuantiusBenignus/blurt/assets/120202899/6f0b352a-b8dd-424d-a3e9-9727dd4ba4eb)
 
 
