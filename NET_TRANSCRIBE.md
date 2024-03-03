@@ -12,7 +12,10 @@ Speech is recorded on the local machine and sent over to a running instance of w
 * The IP and port number for the server should be entered in the configuration block of the script.
 
 * The script will check that a running server is present at the specified IP and complain if not found. To properly set up the server, please, look at its [documentation](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
-
+A typical invocation of the server executable would be something like this (can be placed in your .profile or set up as a startup program from the GNOME GUI):
+```
+/home/path_to/whisper.cpp/server --host 0.0.0.0 --port 58080 -t 8 -nt -m /dev/shm/ggml-base.en.bin &
+```
 * Please, run the script from the command line first to check for its dependencies and have them installed.
 
 When **netwsi** is properly set up, Blurt will work the same way as with local instance of whisper.cpp. Likely faster.
