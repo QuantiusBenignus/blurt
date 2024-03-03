@@ -16,6 +16,12 @@ A typical invocation of the server executable would be something like this (can 
 ```
 /home/path_to/whisper.cpp/server --host 0.0.0.0 --port 58080 -t 8 -nt -m /dev/shm/ggml-base.en.bin &
 ```
+or to use it from the machine it is running on (localhost) only:
+
+```
+/home/path_to/whisper.cpp/server --host 127.0.0.1 --port 58080 -t 8 -nt -m /dev/shm/ggml-base.en.bin &
+```
+
 * Please, run the script from the command line first to check for its dependencies and have them installed.
 
 When **netwsi** is properly set up, Blurt will work the same way as with local instance of whisper.cpp. Likely faster.
