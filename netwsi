@@ -11,7 +11,7 @@
 # SOFTWARE.
 #--------------------------------------------------------------------------
 
-# NAME: wsi 
+# NAME: netwsi - use onlu with Blurt rel. v.1.05 and older (wsi for newer) 
 # PREREQUSITES: 
 #      - whisper.cpp installation (see https://github.com/ggerganov/whisper.cpp) 
 #      - recent versions of 'sox', 'curl', 'xsel' or 'wl-copy' command line utilities from your system's repositories.
