@@ -5,7 +5,7 @@
 It is confirmed to work under version 43 of the GNOME shell (the current version on my Linux system).  
 
 
-**UPDATE: GNOME SHELL version 45 is supported (gshell_45 branch)**. Check it out from there or grab the zip archive from Release v1.0.5. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the corresponding "wsi" (or ["netwsi"](./NET_TRANSCRIBE.md)) scripts from the zip archives in the release page!** The unreleased scripts in the development branches may not be backwards compatible with the published extensions at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
+**UPDATE: GNOME SHELL version 45 is supported (gshell_45 branch)**. Check it out from there or grab the zip archive from Release v1.0.5. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the corresponding "wsi" (or ["netwsi"](./NET_TRANSCRIBE.md)) scripts from the zip archives in the release page!** The unified functionality script `wsi` in the development branch should be backwards compatible with the published extensions at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/) but some functions may be hidden.
 
 **UPDATE: Now capable of transcribing with a whisper.cpp server** - [speedier and recommended](./NET_TRANSCRIBE.md).
 
