@@ -61,7 +61,7 @@ gnome-extensions enable blurt@quantiusbenignus.local
 Inside the **wsi** script, near the begining, there is a clearly marked section, named **"USER CONFIGURATION BLOCK"** where all the user-configurable variables (described in the following section) have been collected. 
 Most can be left as is but the important ones are the location of the whisper.cpp model file that you would like to use during transcription and/or the fallback network address and port of the whisper.cpp server.
 The location of the **wsi** script (should be in your $PATH) can be changed from the "Preferences" dialog, accessible by the system `Extensions` app or by clicking on the `Blurt` (&#x0181;) top bar indicator label.
-![Preferences screenshot](resources/prefs.png)
+![Preferences screenshot](resources/blurt-prefs.png)
 The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and adjust as desired. The schema then has to be recompiled with 
 ```glib-compile-schemas schemas/``` from the command line in the extension folder
 
