@@ -5,11 +5,12 @@ In addition, it also shows speedup of local transcription on faster machines whi
 ### Setup
 Speech is recorded on the local machine and sent over to a running instance of whisper.cpp [server](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server), typically on the local network.
 
-* To make the extension work in network transcription mode, one should change the **wsi** script with **netwsi**, either from the extension preferences, or by simply renaming the scripts.
+* To make the extension work in network transcription mode, one should configure the hostname and port of the server from the extension preferences.
 
-* **netwsi** can be found in this repository and should be placed in $HOME/.local/bin. 
+* **wsi** can be found in this repository and should be placed in $HOME/.local/bin. 
 
-* The IP and port number for the server should be entered in the configuration block of the script.
+* The IP and port number for the server can also be entered in the configuration block of the script (they can be different from the ones in the extension).
+* The fall back to the hostaname and port in the script, input any string starting with hyphen ('-') into the IP / hostname field in the extension preferences. 
 
 * The script will check that a running server is present at the specified IP and complain if not found. To properly set up the server, please, look at its [documentation](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
 A typical invocation of the server executable would be something like this (can be placed in your .profile or set up as a startup program from the GNOME GUI):
@@ -24,9 +25,9 @@ or to use it from the machine it is running on (localhost) only:
 
 * Please, run the script from the command line first to check for its dependencies and have them installed.
 
-When **netwsi** is properly set up, Blurt will work the same way as with local instance of whisper.cpp. Likely faster.
+When **wsi** is properly set up, Blurt will work the same way as with local instance of whisper.cpp. Likely faster.
 
-The next section explains why this mode of transcription is recommended.
+The next section explains why this mode of transcription may bring some speedup.
 
 ## Signifficant Speedup
 ### ... when running a local whisper.cpp server (on the same machine or LAN) versus using main executable
@@ -53,8 +54,8 @@ This is almost **90x-faster-than-real-time** (~140 ms for a 12.5s speech clip). 
 Seems like there is extra advantage to running a local server with the model preloaded.
 
 Seeing this consistently, I would recommend using this **network** mode of operation of Blurt. 
-Just use the netwsi script, which makes a call to whisper.cpp **server** (server should be compiled along with main in your whisper.cpp repo).
+Just use the wsi script, which makes a call to whisper.cpp **server** (server should be compiled along with main in your whisper.cpp repo).
 That means that the server instance must be started on login (on local machine) or available on your LAN. 
 (Calling the whisper.cpp server over the open internet may not be a good idea, since, not only the latency will increase but, among other security factors, there is no encryption of the speech data and the server implementation does not sanitize the calls in any way.)
-
+Please, note that the whisper.cpp server is still in development and may not be production-grade stable. I have noticed on several ocasions that the process becomes defunct after long time. 
 An example for setting up the server with the desired model and other runtime parameters is available [here](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
