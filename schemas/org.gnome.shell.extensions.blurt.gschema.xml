@@ -2,14 +2,39 @@
 <schemalist>
   <schema id="org.gnome.shell.extensions.blurt" path="/org/gnome/shell/extensions/blurt/">
       <key name="speech-input" type="as">
-          <default><![CDATA[['<Ctrl><Alt>Z']]]></default>
+          <default><![CDATA[['<Ctrl><Alt>A']]]></default>
           <summary>Enables speech input</summary>
-          <description>Start or stop dictation</description>
+          <description>Start dictation</description>
+      </key>
+      <key name="stop-recording" type="as">
+          <default><![CDATA[['<Ctrl><Alt>Z']]]></default>
+          <summary>Interrupts speech input</summary>
+          <description>Stop dictation</description>
       </key>
       <key name="whisper-path" type="s">
-          <default>".local/bin/wsi"</default>
+          <default>".local/bin/"</default>
           <summary>ASR location</summary>
-          <description>Speech recognizer executable path relative to $HOME, e.g. $HOME/.local/bin/wsi</description>
+          <description>Speech recognizer executable path relative to $HOME, e.g. $HOME/.local/bin/</description>
+      </key>
+      <key name="whisper-ip" type="s">
+          <default>"127.0.0.1"</default>
+          <summary>API network address</summary>
+          <description>The network address of the whisper.cpp server (dafaults to localhost).</description>
+      </key>
+      <key name="whisper-port" type="s">
+          <default>"58080"</default>
+          <summary>API network port</summary>
+          <description>The network port of the whisper.cpp server</description>
+      </key>
+      <key name="use-api" type="b">
+          <default>false</default>
+          <summary>Toggle to use server API</summary>
+          <description>Use whisper.cpp server API instead of local whisper.cpp</description>
+      </key>
+      <key name="use-clipboard" type="b">
+          <default>false</default>
+          <summary>Toggle to use clipboard</summary>
+          <description>Use middle mouse button to paste (PRIMARY selection) or CTRL+V (clipboard))</description>
       </key>
   </schema>
 </schemalist>
