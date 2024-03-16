@@ -31,12 +31,12 @@ model="$HOME/CHANGE_PATH_TO/WHISPER_CPP/MODELS/HERE/ggml-base.en.bin"
 # Hardcoded temp wav file to store the voice memo and get overwritten every time (in RAM):
 ramf="$TEMPD/wfile"
 #Set the number of processing threads for whisper.cpp inference (adjust for your case):
-NTHR=8
+#NTHR=8
 #It seems that the optimum number of transcribe threads should equal half CPU processing cores:
-#NTHR=$(( $(getconf _NPROCESSORS_ONLN) / 2 ))
+NTHR=$(( $(getconf _NPROCESSORS_ONLN) / 2 ))
 # Use PRIMARY selection (middle mouse button to paste) unless CLIPBOARD selected from GUI: 
 CLIPBOARD=false
-#Provide hardcoded whisper.cpp hostname and port. To be used when invoked with -n option from CLI:
+#Provide hardcoded whisper.cpp server hostname and port. To be used when invoked with -n option from CLI (or from Blurt with any string starting - '-' in the hostname field):
 WHOST="127.0.0.1"
 WPORT="58080"             
 #Can be overwritten from Blurt when command line argument IP:PORT is supplied instead of '-n'
@@ -57,7 +57,7 @@ elif [[ wm == "X11" ]]; then
     command -v xsel &>/dev/null || { echo "We rely on xsel for the clipboard. Please, install xsel." >&2 ; exit 1 ; }
 fi
 #This is needed if wsi is used with Blurt (GNOME shell extension):
-gsettings --schemadir /home/u1/.local/share/gnome-shell/extensions/blurt@quantiusbenignus.local/schemas/ get org.gnome.shell.extensions.blurt use-api &> /dev/null || { echo "This \
+gsettings --schemadir $HOME/.local/share/gnome-shell/extensions/blurt@quantiusbenignus.local/schemas/ get org.gnome.shell.extensions.blurt use-api &> /dev/null || { echo "This \
  script is made to work with Blurt (GNOME shell extension). Please, install it from https://extensions.gnome.org/extension/6742/blurt/"; exit 1 ; }
 #---END CHECK DEPENDENCIES. The above block can be commented out after successful 1st run----------------------------
 
@@ -84,6 +84,7 @@ while [ $# -gt 0 ]; do
         --help)
             echo "Usage: $0 [-c|--clipboard]"
             echo "  -c, --clipboard: Use clipboard instead of PRIMARY selection"
+            echo "  -n, --netapi: Use whisper.cpp server with the host:port in the GONFIG block"
             exit 0
             ;;
         *)
