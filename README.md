@@ -78,7 +78,7 @@ You can't raise the threshold arbitrarily because, if you consistently lower you
 It is best to try to make the speech distinguishable from noise by amplitude (speak clearly, close to the microphone), while minimizing external noise (sheltered location of the microphone, noise canceling hardware etc.)
 With good speech signal level, the threshold can then be more effective, since SNR (speech-to-noise ratio:-) is effectively increased. 
 
-##### Manual speech recording interuption (built-in in the latest version of BLurt - no need to set up, CTRL+ALT+z is default)
+##### Manual speech recording interuption (built-in in the latest version of Blurt - no need to set up, CTRL+ALT+z is default)
 For those who want to be able to interupt the recording manually with a key combination, in the spirit of great hacks, we will not even try to rewrite the extension code because... "kiss".
 Instead of writing javascript to fight with shell setups and edge cases when transfering signals from the GNOME shell to a Gio.subprocess in a new bash or zsh shell etc., we are going to, again, use the system built-in features:
 * Open your GNOME system settings and find "Keyboard".
@@ -93,7 +93,7 @@ Now when the extension is recording speech, it can be stopped with the new key c
 
 For the minimalists, it is trivial to extrapolate from this hack to a complete CLI solution, without a single pixel of GUI video buffering.
 (A simple Adwaita widget window can cost MBs of video memory) 
-Enter [BlahST](https://github.com/QuantiusBenignus/blahst/) - this more universal, lightweight tool configured for server-client transcription, has replaced Blurt completely for me.
+Enter [BlahST](https://github.com/QuantiusBenignus/blahst/) - this more universal, lightweight tool configured for client-server transcription, has replaced Blurt completely for me.
 
 After the speech is captured, it will be passed to `transcribe` (whisper.cpp) for speech recognition. This will happen faster than real time (especially with a fast CPU or if your whisper.cpp installation uses CUDA). One can adjust the number of processing threads used by adding  `-t n` to the command line parameters of transcribe (please, see whisper.cpp documentation). 
 The script will then parse the text to remove non-speech artifacts, format it and send it to the PRIMARY selection (clipboard) using either X11 or Wayland tools. 
