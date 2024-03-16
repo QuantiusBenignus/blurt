@@ -81,8 +81,8 @@ while [ $# -gt 0 ]; do
             fi
             shift
             ;;
-        --help)
-            echo "Usage: $0 [-c|--clipboard]"
+        -h|--help)
+            echo "Usage: $0 [-c|--clipboard] [-n|--netapi]"
             echo "  -c, --clipboard: Use clipboard instead of PRIMARY selection"
             echo "  -n, --netapi: Use whisper.cpp server with the host:port in the GONFIG block"
             exit 0
