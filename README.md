@@ -34,8 +34,8 @@ The convenience that this extension affords is demonstrated in this screencast (
 #### "INSTALLATION"
 
 *(Assuming whisper.cpp is installed and the "main" and "server" executables compiled with 'make' in the cloned whisper.cpp repo. See Prerequisites section)*
-* Place the orchestrator script **wsi** ([also handles connection to a wisper.cpp server](./NET_TRANSCRIBE.md) in $HOME/.local/bin/
-  ```
+* Place the orchestrator script **wsi**  in $HOME/.local/bin/ ([also handles connection to a wisper.cpp server](./NET_TRANSCRIBE.md))
+ ```
   cp -t $HOME/.local/bin wsi
   ```
 * Make it executable:
