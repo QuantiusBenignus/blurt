@@ -57,10 +57,11 @@ Seeing this consistently, I would recommend using this **network** mode of opera
 Just use the wsi script, which makes a call to whisper.cpp **server** (server should be compiled along with main in your whisper.cpp repo).
 That means that the server instance must be started on login (on local machine) or available on your LAN.
 
-##### Two caveats:
+##### Caveats:
 
-1. If using CUDA accelleration, you will gain some speedup (say 150ms with cuBLAS, vs. 500 ms without) but if the server is running for a long time, it seems to eventually release the CUDA kernel memory (or is it hapening outside the server code, not sure, see this [issue](https://github.com/ggerganov/whisper.cpp/issues/1991#issue-2204120607) for description). When that happens, the server has to be restarted. So this mode with CUDA support for now makes sense if there is a batch of signifficant speech activity that has to be processed over a short time, rather than ocasional transcription here and there (for which I would recommend the server run without the GPU accelleration `-ng` command line flag, still ~100 ms faster than local whisper.cpp).
-2. I have noticed that with the whisper.cpp server code resident in memory (including a large chunck of VRAM), running other generative AI models (e.g. Stable Diffusion) may result in a run without CUDA support (as the GPU is reported to be busy and unavailable). This could be a serious trade-off if the server is only used for occasional speech recognition.  
+1. System SUSPEND while server is running. 
+   - If the server is running for a long time and the system enters in SUSPEND mode (if enabled), it seems, the CUDA kernel memory is freed. Then on API call (after RESUME), the server exits abnormally and has to be restarted (see this [issue](https://github.com/ggerganov/whisper.cpp/issues/1991#issue-2204120607) for description).  
+   - After return from SUSPEND, running of the server and other generative AI models (e.g. Stable Diffusion) may result in a run without CUDA support (as the GPU is reported to be busy and unavailable). This could be a serious trade-off. There is a solution as described [here](https://askubuntu.com/questions/1228423/how-do-i-fix-cuda-breaking-after-suspend) for example. 
 ---
 ⚠️Warning: (Calling the whisper.cpp server over the open internet may not be a good idea, since, not only the latency will increase but, among other security factors, there is no encryption of the speech data and the server implementation does not sanitize the calls in any way.)
 Please, note that the whisper.cpp server is still in development and may not be production-grade stable. 
