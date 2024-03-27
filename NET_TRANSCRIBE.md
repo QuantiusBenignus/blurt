@@ -61,7 +61,7 @@ That means that the server instance must be started on login (on local machine) 
 
 1. System SUSPEND while server is running. 
    - If the server is running for a long time and the system enters in SUSPEND mode (if enabled), it seems, the CUDA kernel memory is freed. Then on API call (after RESUME), the server exits abnormally and has to be restarted (see this [issue](https://github.com/ggerganov/whisper.cpp/issues/1991#issue-2204120607) for description).  
-   - After return from SUSPEND, running of the server and other generative AI models (e.g. Stable Diffusion) may result in a run without CUDA support (as the GPU is reported to be busy and unavailable). This could be a serious trade-off. There is a solution as described [here](https://askubuntu.com/questions/1228423/how-do-i-fix-cuda-breaking-after-suspend) for example. 
+   - After return from SUSPEND, running the server and other generative AI models (e.g. Stable Diffusion) may result in a run without CUDA support (as the GPU is reported to be busy and unavailable). This could be a serious trade-off. There is a solution as described [here](https://askubuntu.com/questions/1228423/how-do-i-fix-cuda-breaking-after-suspend) for example. 
 ---
 ⚠️Warning: (Calling the whisper.cpp server over the open internet may not be a good idea, since, not only the latency will increase but, among other security factors, there is no encryption of the speech data and the server implementation does not sanitize the calls in any way.)
 Please, note that the whisper.cpp server is still in development and may not be production-grade stable. 
