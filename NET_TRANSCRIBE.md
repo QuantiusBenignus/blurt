@@ -55,7 +55,13 @@ Seems like there is extra advantage to running a local server with the model pre
 
 Seeing this consistently, I would recommend using this **network** mode of operation of Blurt. 
 Just use the wsi script, which makes a call to whisper.cpp **server** (server should be compiled along with main in your whisper.cpp repo).
-That means that the server instance must be started on login (on local machine) or available on your LAN. 
-(Calling the whisper.cpp server over the open internet may not be a good idea, since, not only the latency will increase but, among other security factors, there is no encryption of the speech data and the server implementation does not sanitize the calls in any way.)
-Please, note that the whisper.cpp server is still in development and may not be production-grade stable. I have noticed on several ocasions that the process becomes defunct after long time. 
+That means that the server instance must be started on login (on local machine) or available on your LAN.
+
+##### Two caveats:
+
+1. If using CUDA accelleration, you will gain some speedup (say 150ms with cuBLAS, vs. 500 ms without) but if the server is running for a long time, it seems to eventually release the CUDA kernel memory (or is it hapening outside the server code, not sure, see this [issue](https://github.com/ggerganov/whisper.cpp/issues/1991#issue-2204120607) for description). When that happens, the server has to be restarted. So this mode with CUDA support for now makes sense if there is a batch of signifficant speech activity that has to be processed over a short time, rather than ocasional transcription here and there (for which I would recommend the server run without the GPU accelleration `-ng` command line flag, still ~100 ms faster than local whisper.cpp).
+2. I have noticed that with the whisper.cpp server code resident in memory (including a large chunck of VRAM), running other generative AI models (e.g. Stable Diffusion) may result in a run without CUDA support (as the GPU is reported to be busy and unavailable). This could be a serious trade-off if the server is only used for occasional speech recognition.  
+---
+⚠️Warning: (Calling the whisper.cpp server over the open internet may not be a good idea, since, not only the latency will increase but, among other security factors, there is no encryption of the speech data and the server implementation does not sanitize the calls in any way.)
+Please, note that the whisper.cpp server is still in development and may not be production-grade stable. 
 An example for setting up the server with the desired model and other runtime parameters is available [here](https://github.com/ggerganov/whisper.cpp/tree/master/examples/server)
