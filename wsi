@@ -29,7 +29,7 @@ TEMPD='/dev/shm'
 #model="$TEMPD/ggml-base.en.bin"
 model="$HOME/CHANGE_PATH_TO/WHISPER_CPP/MODELS/HERE/ggml-base.en.bin"
 # Hardcoded temp wav file to store the voice memo and get overwritten every time (in RAM):
-ramf="$TEMPD/wfile"
+ramf="$TEMPD/wfile-$USER"
 #Set the number of processing threads for whisper.cpp inference (adjust for your case):
 #NTHR=8
 #It seems that the optimum number of transcribe threads should equal half CPU processing cores:
