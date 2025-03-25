@@ -113,6 +113,10 @@ if [ -n "$IPnPORT" ]; then
 else
     str="$(transcribe -t $NTHR -nt -m $model -f $ramf 2>/dev/null)" 
 fi
+
+# delete file to save RAM
+rm -f "$ramf"
+
 # Whisper detected non-speech events such as (wind blowing): 
 str="${str/\(*\)}"   
 str="${str/\[*\]}"
