@@ -15,7 +15,7 @@ The current code in `main` is tested on and supports ver. 48 (and likely 46 and 
 - **Start/Stop speech-to-text input with a left click on the icon**
 - **Icon color shows status during operation**
 
-**UPDATE: GNOME SHELL version 48 is now supported in the main branch**. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the "wsi" (or ["netwsi"](./NET_TRANSCRIBE.md)) scripts from this repository** The unified functionality script `wsi` in the master branch is in sync with versions 6 and 8 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
+**UPDATE: GNOME SHELL version 48 is now supported in the main branch**. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the "wsi" script from this repository** The unified functionality script `wsi` in the master branch is in sync with versions 6 and 8 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
 
 When the extension is installed and enabled (indicated with &#x1E04; in the top bar), one can input text from speech into any window that allows input (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+a> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection or Clipboard under X11 or Wayland.
 When recording speech, a microphone indicator appears in the top bar and the color of the extension indicator &#x0181; becomes yellow.
