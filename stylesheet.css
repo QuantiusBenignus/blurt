@@ -1,0 +1,25 @@
+/* Blurt custom extension styling*/
+."panel-button" {
+    color: black;
+}
+.si-label {
+    color: white;
+    font-size: 16px;
+/*    background-color: rgba(0, 0, 0, 0.5); */
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.i-label {
+    color: yellow;
+    font-size: 16px;
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.e-label {
+    color: red;
+    font-size: 16px;
+    padding: 2px;
+    border-radius: 2px;
+}

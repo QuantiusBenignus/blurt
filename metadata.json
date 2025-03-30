@@ -1,0 +1,13 @@
+{
+  "description": "Input speech to text into any GNOME window with a text input field",
+  "name": "Blurt",
+  "settings-schema": "org.gnome.shell.extensions.blurt",
+  "shell-version": [
+    "46",
+    "47",
+    "48"
+  ],
+  "url": "https://github.com/QuantiusBenignus/blurt",
+  "uuid": "blurt@quantiusbenignus.local",
+  "version": 7
+}
