@@ -3,16 +3,21 @@
 
 (**For a leaner tool working across all desktop environments, check also [Blah Speech to Text](https://github.com/QuantiusBenignus/blahst).**)
 
-[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" align="right">](https://extensions.gnome.org/extension/6742/blurt/)
 **Blurt**  is a simple Gnome shell extension based on the command line utility [NoteWhispers](https://github.com/quantiusbenignus/NoteWhispers), which itself, is built around the great [whisper.cpp](https://github.com/ggerganov/whisper.cpp).
-It is confirmed to work under version 43 of the GNOME shell (the current version on my Linux system).  
+The current code in `main` is tested on and supports ver. 48 (and likely 46 and 47) of the Gnome shell. For older versions, see the respective folders (releases) or go to the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/).  
 
+[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" align="right">](https://extensions.gnome.org/extension/6742/blurt/)
+**Features:**
+- **Can use local whisper.cpp installation**
+- **Or transcribe with a whisper.cpp server** -[speedier and recommended](./NET_TRANSCRIBE.md).
+- **Right click for preferences and setup**
+- **Start/Stop speech-to-text input with a set of key bindings**
+- **Start/Stop speech-to-text input with a left click on the icon**
+- **Icon color shows status during operation**
 
-**UPDATE: GNOME SHELL version 45 is supported**. Check it out from the *gshell_45* branch or grab it from Releases, v1.0.5. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the corresponding "wsi" (or ["netwsi"](./NET_TRANSCRIBE.md)) scripts from the zip archives in the Releases page!** The unified functionality script `wsi` in the master branch is in sync with version 6 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
+**UPDATE: GNOME SHELL version 48 is now supported in the main branch**. <!--If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the corresponding "wsi" (or ["netwsi"](./NET_TRANSCRIBE.md)) scripts from the zip archives in the Releases page!** The unified functionality script `wsi` in the master branch is in sync with version 6 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).-->
 
-**UPDATE: Now capable of transcribing with a whisper.cpp server** - [speedier and recommended](./NET_TRANSCRIBE.md).
-
-When the extension is installed and enabled (indicated with &#x0181; in the top bar), one can input text from speech into any window that allows input (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+a> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection or Clipboard under X11 or Wayland.
+When the extension is installed and enabled (indicated with &#x1E04; in the top bar), one can input text from speech into any window that allows input (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+a> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection or Clipboard under X11 or Wayland.
 When recording speech, a microphone indicator appears in the top bar and the color of the extension indicator &#x0181; becomes yellow.
 The disappearance of the microphone icon from the top bar indicates that the recognizer has "blurted" a snippet of text that can be pasted with the middle mouse button. (Note that on slower systems there may be a slight delay after the microphone icon disappears and before the text reaches the clipboard due to the time needed for transcription. On my computer it is less than 300 ms for an average paragraph of spoken text).
 
