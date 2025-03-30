@@ -15,7 +15,7 @@ The current code in `main` is tested on and supports ver. 48 (and likely 46 and 
 - **Start/Stop speech-to-text input with a left click on the icon**
 - **Icon color shows status during operation**
 
-**UPDATE: GNOME SHELL version 48 is now supported in the main branch**. <!--If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the corresponding "wsi" (or ["netwsi"](./NET_TRANSCRIBE.md)) scripts from the zip archives in the Releases page!** The unified functionality script `wsi` in the master branch is in sync with version 6 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).-->
+**UPDATE: GNOME SHELL version 48 is now supported in the main branch**. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the "wsi" (or ["netwsi"](./NET_TRANSCRIBE.md)) scripts from this repository** The unified functionality script `wsi` in the master branch is in sync with versions 6 and 8 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
 
 When the extension is installed and enabled (indicated with &#x1E04; in the top bar), one can input text from speech into any window that allows input (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+a> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection or Clipboard under X11 or Wayland.
 When recording speech, a microphone indicator appears in the top bar and the color of the extension indicator &#x0181; becomes yellow.
@@ -49,11 +49,15 @@ The convenience that this extension affords is demonstrated in this screencast (
   ```
 * Configure the script to match your environment (see CONFIGURATION section below).
 * Run once from the command line to let the script check for required dependencies.
-* If using local whisper.cpp, create a symbolic link (the code expects 'transcribe' in your $PATH) to the compiled "main" executable in the whisper.cpp directory.
+* If using local whisper.cpp, create a symbolic link (the code expects 'transcribe' in your $PATH) to the compiled "whisper-cli" executable in the whisper.cpp directory.
   For example, create it in your `$HOME/.local/bin/` (part of your $PATH) with 
 ```
-ln -s /full/path/to/whisper.cpp/main $HOME/.local/bin/transcribe
+ln -s /full/path/to/whisper.cpp/build/bin/whisper-cli $HOME/.local/bin/transcribe
+#The same can be done for the whisper-server:
+ln -s /full/path/to/whisper.cpp/build/bin/whisper-server $HOME/.local/bin/whserver
+#The previous exacutables `main` and `server` have been renamed/deprecated
 ```
+
 If transcribe is not in your $PATH, either edit the call to it in **wsi** to include the absolute path, or add its location to the $PATH variable. Otherwise the script and by extension, the extension:-) will fail.
 * The extension can then be installed either from https://extensions.gnome.org/extension/6742/blurt/ with one-click install, or manually by clonning this repository (or just grabbing the zip archive).
 If you are installing the Blurt GNOME extension manually, place the extracted folder `blurt@quantiousbenignus.local` into `$HOME/.local/share/gnome-shell/extensions` and enable it from your `Extensions` system app or from the command line with
@@ -71,7 +75,7 @@ Most can be left as is but the important ones are the location of the whisper.cp
 The location of the **wsi** script (should be in your $PATH) can be changed from the "Preferences" dialog, accessible by the system `Extensions` app or by clicking on the `Blurt` (&#x0181;) top bar indicator label.
 ![Preferences screenshot](resources/blurt-prefs.png)
 The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and adjust as desired. The schema then has to be recompiled with 
-```glib-compile-schemas schemas/``` from the command line in the extension folder
+```glib-compile-schemas schemas/``` from the command line in the extension folder (Note that now you can also use a mouse click on the top-bar indicator to START/STOP speech input).
 
 #### TIPS AND TRICKS
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp. This is done in **wsi** with this command:
