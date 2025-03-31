@@ -14,7 +14,7 @@ The current code in `main` is tested on and supports ver. 48 (and likely 46 and 
 - **Start/Stop speech-to-text input with a set of key bindings**
 - **Start/Stop speech-to-text input with a left click on the icon**
 - **Icon color shows status during operation**
-- **NEW. Transcribe with a [whisperfile](https://github.com/QuantiusBenignus/blurt/edit/main/README.md#whisperfile-inference)**
+- **NEW. Option to transcribe with a [whisperfile](https://github.com/QuantiusBenignus/blurt/README.md#whisperfile-inference)**
 
 **UPDATE: GNOME SHELL version 48 is now supported in the main branch**. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the "wsi" script from this repository** The unified functionality script `wsi` in the master branch is in sync with versions 6 and 8 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
 
@@ -78,6 +78,14 @@ The location of the **wsi** script (should be in your $PATH) can be changed from
 The keyboard shortcut to initiate speech input can also be modified if necessary. Check the gschema.xml file for the key combination and adjust as desired. The schema then has to be recompiled with 
 ```glib-compile-schemas schemas/``` from the command line in the extension folder (Note that now you can also use a mouse click on the top-bar indicator to START/STOP speech input).
 
+#### Whisperfile Inference
+If installing/compiling whisper.cpp seems like a dounting task, one can simply download a [whisperfile](https://huggingface.co/Mozilla/whisperfile), an actually portable executable from the [llamafile project](https://github.com/Mozilla-Ocho/llamafile), that works on most platforms and contains both the inference engine (whisper.cpp variant) and an embedded whisper model file. All one needs to do is place the whisperfile somewhere in the PATH and make it executable. For example:
+```
+mv whisper-tiny.en.llamafile ~/.local/bin/
+chmod +x ~/.local/bin/whisper-tiny.en.llamafile
+```
+The small cost to pay when using a whisperfile is that a compiled whisper.cpp will run inference faster (especially if compiled with full GPU support). The `wsi` scriptis set up in such a way that if the $WHISPERFILE variable in its CONFIG section is uncommented and points to a valid executable whisperfile (either full path to it or a qualified name in the PATH), the script will attempt first to perform transcription with the whisperfile. The whisper.cpp inference becomes the fallback option. Commenting out the $WHISPERFILE variable will revert to inference with whisper.cpp's `whisper-cli` or `whisper-server`.   
+
 #### TIPS AND TRICKS
 Sox is recording in wav format at 16k rate, the only currently accepted by whisper.cpp. This is done in **wsi** with this command:
 `rec -t wav $ramf rate 16k silence 1 0.1 3% 1 2.0 6% `
@@ -87,14 +95,6 @@ It will attempt to stop on silence of 2s with signal level threshold of 6%. A ve
 You can't raise the threshold arbitrarily because, if you consistently lower your voice (fadeout) at the end of your speech, it may get cut off if the threshold is high. Lower it in that case to a few %.    
 It is best to try to make the speech distinguishable from noise by amplitude (speak clearly, close to the microphone), while minimizing external noise (sheltered location of the microphone, noise canceling hardware etc.)
 With good speech signal level, the threshold can then be more effective, since SNR (speech-to-noise ratio:-) is effectively increased. 
-
-##### Whisperfile Inference
-If installing/compiling whisper.cpp seems like a dounting task, one can simply download a [whisperfile](https://huggingface.co/Mozilla/whisperfile), an actually portable executable from the [llamafile project](https://github.com/Mozilla-Ocho/llamafile), that works on most platforms and contains both the inference engine (whisper.cpp variant) and an embedded whisper model file. All one needs to do is place the whisperfile somewhere in the PATH and make it executable. For example:
-```
-mv whisper-tiny.en.llamafile ~/.local/bin/
-chmod +x ~/.local/bin/whisper-tiny.en.llamafile
-```
-The small cost to pay when using a whisperfile is that a compiled whisper.cpp will run inference faster (especially if compiled with full GPU support). The `wsi` scriptis set up in such a way that if the $WHISPERFILE variable in its CONFIG section is uncommented and points to a valid executable whisperfile (either full path to it or a qualified name in the PATH), the script will attempt first to perform transcription with the whisperfile. The whisper.cpp inference becomes the fallback option. Commenting out the $WHISPERFILE variable will revert to inference with whisper.cpp's `whisper-cli` or `whisper-server`.   
 
 ##### Manual speech recording interuption (built-in in the latest version of Blurt - no need to set up, CTRL+ALT+z is default)
 For those who want to be able to interupt the recording manually with a key combination, in the spirit of great hacks, we will not even try to rewrite the extension code because... "kiss".
