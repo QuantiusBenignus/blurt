@@ -31,7 +31,7 @@ TEMPD='/dev/shm'
 model="$HOME/CHANGE_PATH_TO/WHISPER_CPP/MODELS/HERE/ggml-base.en.bin"
 
 # Uncomment to use available (in the PATH) whisperfile (WITH BUILT-IN MODEL) instead of standalone whisper.cpp or whisper.cpp server
-#This mode has precedence over a llama.cpp installation, so uncommenting it will make blurt default to the whisperfile.
+#This mode has precedence over a whisper.cpp installation, so uncommenting it will make blurt default to the whisperfile.
 #The advantage of the whisperfile is that no installation is needed, the model is built-in, just `chmod +x whisperfile...` and it is ready to use. 
 #WHISPERFILE="whisper-tiny.en.llamafile" #this and others available from https://huggingface.co/Mozilla/whisperfile/tree/main
 
@@ -54,7 +54,7 @@ command -v curl &>/dev/null || { echo "curl is required. Please, install curl" >
 #The next is only needed if curl requests json output from the whisper.cpp server;
 #command -v jq &>/dev/null || { echo "jq is required. Please, install jq" >&2 ; exit 1 ; }
 command -v sox &>/dev/null || { echo "sox is required. Please, install sox" >&2 ; exit 1 ; }
-command -v $WHISPERFILE &>/dev/null || { echo "No whisperfile found, checking for llama.cpp...   " ; \
+command -v $WHISPERFILE &>/dev/null || { echo "No whisperfile found, get one from https://huggingface.co/Mozilla/whisperfile. Checking for whisper.cpp...   " ; \
 command -v transcribe &>/dev/null || { echo -e "Please, install whisper.cpp (see https://github.com/ggerganov/whisper.cpp)\
 \nand create 'transcribe' in your PATH as a symbolic link to the main executable, e.g.\n \
  'ln -s /full/path/to/whisper.cpp/main \$HOME/.local/bin/transcribe'" >&2 ; exit 1 ; } }
