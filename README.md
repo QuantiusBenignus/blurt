@@ -14,7 +14,7 @@ The current code in `main` is tested on and supports ver. 48 (and likely 46 and 
 - **Start/Stop speech-to-text input with a set of key bindings**
 - **Start/Stop speech-to-text input with a left click on the icon**
 - **Icon color shows status during operation**
-- **NEW. Option to transcribe with a [whisperfile](https://github.com/QuantiusBenignus/blurt/README.md#whisperfile-inference)**
+- **NEW. Option to transcribe with a [whisperfile](https://github.com/QuantiusBenignus/blurt?tab=readme-ov-file#whisperfile-inference)**
 
 **UPDATE: GNOME SHELL version 48 is now supported in the main branch**. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the "wsi" script from this repository** The unified functionality script `wsi` in the master branch is in sync with versions 6 and 8 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
 
