@@ -63,7 +63,7 @@ gnome-extensions enable blurt@quantiusbenignus.local
 ```
 * Make it executable:
 ```
-  cd $HOME/.local/bin; chmod +x wsi
+  chmod +x $HOME/.local/bin/wsi
 ```
 
 * Set up at least one of the inference engines:
@@ -86,14 +86,14 @@ If installing/compiling whisper.cpp seems like a dounting task, one can simply d
 mv whisper-tiny.en.llamafile ~/.local/bin/
 chmod +x ~/.local/bin/whisper-tiny.en.llamafile
 ```
-The small cost to pay when using a whisperfile is that a compiled whisper.cpp will run inference faster (especially if compiled with full GPU support). The `wsi` scriptis set up in such a way that if the $WHISPERFILE variable in its CONFIG section is uncommented and points to a valid executable whisperfile (either full path to it or a qualified name in the PATH), the script will attempt first to perform transcription with the whisperfile. The whisper.cpp inference becomes the fallback option. Commenting out the $WHISPERFILE variable will revert to inference with whisper.cpp's `whisper-cli` or `whisper-server`.   
+The small cost to pay when using a whisperfile is that a compiled whisper.cpp will run inference faster (especially if compiled with full GPU support). The `wsi` script is set up in such a way that if the $WHISPERFILE variable in its CONFIG section is uncommented and points to a valid executable whisperfile (either full path to it or a qualified name in the PATH), the script will attempt first to perform transcription with the whisperfile. The whisper.cpp inference becomes the fallback option. Commenting out the $WHISPERFILE variable will revert to inference with whisper.cpp's `whisper-cli` or `whisper-server`.   
 
 * Configure the script to match your environment (see CONFIGURATION section below).
 * Run once from the command line to let the script check for required dependencies.  
 
 ##### CONFIGURATION
-Inside the **wsi** script, near the begining, there is a clearly marked section, named **"USER CONFIGURATION BLOCK"** where all the user-configurable variables (described in the following section) have been collected. 
-Most can be left as is but the important ones are the location of the whisper.cpp model file that you would like to use during transcription and/or the fallback network address and port of the whisper.cpp server.
+Inside the **wsi** script, near the begining, there is a clearly marked section, named **"USER CONFIGURATION BLOCK"** where all the user-configurable variables have been collected. 
+Most can be left as is but the important ones are the location of the whisper.cpp model file that you would like to use during transcription and/or the network address and port of the whisper.cpp server.
 The location of the **wsi** script (should be in your $PATH) can be changed from the "Preferences" dialog, accessible by the system `Extensions` app or by right-clicking on the `Blurt` (&#x1e04;) top bar indicator label.
 ![Preferences screenshot](resources/blurt-prefs.png)
 
@@ -118,7 +118,8 @@ You can't raise the threshold arbitrarily because, if you consistently lower you
 It is best to try to make the speech distinguishable from noise by amplitude (speak clearly, close to the microphone), while minimizing external noise (sheltered location of the microphone, noise canceling hardware etc.)
 With good speech signal level, the threshold can then be more effective, since SNR (speech-to-noise ratio:-) is effectively increased. 
 
-##### Manual speech recording interuption (built-in in the latest version of Blurt - no need to set up, CTRL+ALT+z is default)
+<details>
+<summary> Manual speech recording interuption (built-in in the latest version of Blurt - no need to set up, CTRL+ALT+z is default) </summary>
 For those who want to be able to interupt the recording manually with a key combination, in the spirit of great hacks, we will not even try to rewrite the extension code because... "kiss".
 Instead of writing javascript to fight with shell setups and edge cases when transfering signals from the GNOME shell to a Gio.subprocess in a new bash or zsh shell etc., we are going to, again, use the system built-in features:
 * Open your GNOME system settings and find "Keyboard".
@@ -130,8 +131,9 @@ Instead of writing javascript to fight with shell setups and edge cases when tra
 * Click Add and you are done. 
 That Simple.  Just make sure that the new key binding has not been set-up already for something else.
 Now when the extension is recording speech, it can be stopped with the new key combo and transcription will start immediatelly.
+</details>
 
-For the minimalists, it is trivial to extrapolate from this hack to a complete CLI solution, without a single pixel of GUI video buffering.
+For the minimalists, the use of two hotkeys as an UI can be extrapolated to a complete CLI solution, without a single pixel of GUI video buffering.
 (A simple Adwaita widget window can cost MBs of video memory) 
 Enter [BlahST](https://github.com/QuantiusBenignus/blahst/) - this more universal, lightweight tool configured for client-server transcription, has replaced Blurt completely for me.
 
@@ -151,9 +153,6 @@ For the aforementioned reasons, especially if HDD is the main storage media, one
 ```
 ([ -f /dev/shm/ggml-base.en.bin ] || cp /path/to/your/local/whisper.cpp/models/ggml* /dev/shm/)
 ```
-
-At this stage the extension, while useful, is somewhat of a "convenience hack" and can be improved by a seasoned GNOME developer who may find a better way to invoke whisper.cpp and fill the clipboard.
-A virtual keyboard device implementing a legitimate IBus input method to send the text to a target text field is another direction for improvement, although I have no idea how to spy the field in focus, outside of the hacky nature of `xdotoll` and such.
 
 #### Credits
 * Open AI (for [Whisper](https://github.com/openai/whisper))
