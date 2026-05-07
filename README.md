@@ -4,7 +4,7 @@
 (**For a leaner tool working across all desktop environments, check also [Blah Speech to Text](https://github.com/QuantiusBenignus/blahst).**)
 
 **Blurt**  is a simple Gnome shell extension based on the command line utility [NoteWhispers](https://github.com/quantiusbenignus/NoteWhispers), which itself, is built around the great [whisper.cpp](https://github.com/ggerganov/whisper.cpp).
-The current code in `main` is tested on and supports ver. 48 (and likely 46 and 47) of the Gnome shell. For older versions, see the respective folders (releases) or go to the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/).  
+The current code in `main` is tested on and supports ver. 49 and lower (and likely 50 since there are no relevant API changes) of the Gnome shell. For versions older than 46, see the respective folders (releases) or go to the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/).  
 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" align="right">](https://extensions.gnome.org/extension/6742/blurt/)
 **Features:**
@@ -16,7 +16,7 @@ The current code in `main` is tested on and supports ver. 48 (and likely 46 and 
 - **Icon color shows status during operation**
 - **NEW. Option to transcribe with a [whisperfile](https://github.com/QuantiusBenignus/blurt?tab=readme-ov-file#whisperfile-inference)**
 
-**UPDATE: GNOME SHELL version 48 is now supported in the main branch**. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the "wsi" script from this repository** The unified functionality script `wsi` in the master branch is in sync with versions 6 and 8 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
+**UPDATE: GNOME SHELL versions 48 and 49 are now supported in the main branch**. If installing directly from the [GNOME extensions website](https://extensions.gnome.org/extension/6742/blurt/), please, **get the "wsi" script from this repository** The unified functionality script `wsi` in the master branch is in sync with versions 6 and 8 of the extension published at [GNOME extensions](https://extensions.gnome.org/extension/6742/blurt/).
 
 When Blurt is enabled (indicated with &#x1E04; in the top bar), one can input text from speech into any editable field (such as the text editor in the screencast below). This is done by pressing a key combination (<CTRL+ALT+a> is the default), triggering a speech recognizer process that records a speech clip from the microphone, transcribes it with whisper.cpp and sends the result to the PRIMARY selection or Clipboard under X11 or Wayland.
 When recording speech, a microphone indicator appears in the top bar and the color of the extension indicator &#x1E04; becomes yellow.
