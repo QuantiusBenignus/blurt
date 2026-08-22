@@ -26,8 +26,7 @@ wm="$XDG_SESSION_TYPE"
 # Store temp files in memory for speed and to reduce SSD/HDD "grinding":
 TEMPD='/dev/shm'
 # Default whisper.cpp model file for inference:
-#model="$TEMPD/ggml-base.en.bin"
-model="$HOME/CHANGE_PATH_TO/WHISPER_CPP/MODELS/HERE/ggml-base.en.bin"
+model="$TEMPD/ggml-base.en.bin"
 
 # Uncomment to use available (in the PATH) whisperfile (WITH BUILT-IN MODEL) instead of standalone whisper.cpp or whisper.cpp server
 #This mode has precedence over a whisper.cpp installation, so uncommenting it will make blurt default to the whisperfile.
@@ -46,17 +45,27 @@ CLIPBOARD=false
 WHOST="127.0.0.1"
 WPORT="58080"             
 #Can be overwritten from Blurt when command line argument IP:PORT is supplied instead of '-n'
+
+#---LOAD EXTERNAL CONFIGURATION IF AVAILABLE----------------------------------------------------
+# You can override any of the variables above by creating a config file at ~/.config/blurt/blurtrc
+# or ~/.blurtrc. This allows keeping your local paths and settings out of git.
+if [[ -f "$HOME/.config/blurt/blurtrc" ]]; then
+    . "$HOME/.config/blurt/blurtrc"
+elif [[ -f "$HOME/.blurtrc" ]]; then
+    . "$HOME/.blurtrc"
+fi
+#------------------------------------------------------------------------------------------------
 #---END USER CONFIG BLOCK------------------------------------------------------------------------
 
 #---CHECK DEPENDENCIES. This block can be commented out once dependencies confirmed-----------------------------------
+: ${WHISPER_CLI:=transcribe}
+
 command -v curl &>/dev/null || { echo "curl is required. Please, install curl" >&2 ; exit 1 ; }
 #The next is only needed if curl requests json output from the whisper.cpp server;
 #command -v jq &>/dev/null || { echo "jq is required. Please, install jq" >&2 ; exit 1 ; }
 command -v sox &>/dev/null || { echo "sox is required. Please, install sox" >&2 ; exit 1 ; }
-command -v $WHISPERFILE &>/dev/null || { echo "No whisperfile found, get one from https://huggingface.co/Mozilla/whisperfile. Checking for whisper.cpp...   " ; \
-command -v transcribe &>/dev/null || { echo -e "Please, install whisper.cpp (see https://github.com/ggerganov/whisper.cpp)\
-\nand create 'transcribe' in your PATH as a symbolic link to the main executable, e.g.\n \
- 'ln -s /full/path/to/whisper.cpp/main \$HOME/.local/bin/transcribe'" >&2 ; exit 1 ; } }
+command -v $WHISPERFILE &>/dev/null || { echo "No whisperfile found, checking for whisper.cpp...   " ; \
+command -v $WHISPER_CLI &>/dev/null || [[ -x "$WHISPER_CLI" ]] || { echo -e "whisper CLI not found. Please install whisper.cpp and make sure '$WHISPER_CLI' is in your PATH\nor specify its path in your config file (e.g. WHISPER_CLI=/path/to/whisper-cli)." >&2 ; exit 1 ; } }
 #Now let's check if we are in X11 or Wayland and use the right utility:
 if [[ "$wm" == "wayland" ]]; then
     command -v wl-copy &>/dev/null || { echo "wl-copy is needed for the clipboard. Please, install wl-copy" >&2 ; exit 1 ; } 
@@ -106,8 +115,23 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-#trap "" SIGINT
-rec -q -t wav $ramf rate 16k silence 1 0.1 1% 1 2.0 5%  2>/dev/null
+# Initialize variables if not already set by external config
+: ${REC_ARGS:=rate 16k silence 1 0.1 1% 1 2.0 5%}
+: ${WHISPER_LANG:=}
+: ${WHISPER_CLI:=transcribe}
+
+# Record audio (trap SIGINT is handled gracefully by command or || true)
+if [ -n "$ZSH_NAME" ]; then
+    rec -q -t wav "$ramf" ${=REC_ARGS} 2>/dev/null || true
+else
+    rec -q -t wav "$ramf" $REC_ARGS 2>/dev/null || true
+fi
+
+# Prepare language option if configured
+lang_opt=""
+if [ -n "$WHISPER_LANG" ]; then
+    lang_opt="-l $WHISPER_LANG"
+fi
  
 if [ -n "$IPnPORT" ]; then
     str=$(curl -S -s $IPnPORT/inference \
@@ -118,11 +142,17 @@ if [ -n "$IPnPORT" ]; then
         -F response_format="text")
 # | jq -r '.text' )
 elif command -v $WHISPERFILE &>/dev/null ; then 
-    str="$($WHISPERFILE -t $NTHR -nt -f $ramf 2>/dev/null)"
-    #One can still use the standalone model with the whisperfile, if so desired:
-    #str="$($WHISPERFILE -t $NTHR -nt -m $model -f $ramf 2>/dev/null)"
+    if [ -n "$ZSH_NAME" ]; then
+        str="$($WHISPERFILE -t $NTHR -nt ${=lang_opt} -f "$ramf" 2>/dev/null)"
+    else
+        str="$($WHISPERFILE -t $NTHR -nt $lang_opt -f "$ramf" 2>/dev/null)"
+    fi
 else
-    str="$(transcribe -t $NTHR -nt -m $model -f $ramf 2>/dev/null)" 
+    if [ -n "$ZSH_NAME" ]; then
+        str="$("$WHISPER_CLI" -t $NTHR -nt -m "$model" ${=lang_opt} -f "$ramf" 2>/dev/null)"
+    else
+        str="$("$WHISPER_CLI" -t $NTHR -nt -m "$model" $lang_opt -f "$ramf" 2>/dev/null)"
+    fi
 fi
 # Whisper detected non-speech events such as (wind blowing): 
 str="${str/\(*\)}"   
@@ -153,16 +183,16 @@ else
  case "$wm" in
     "x11")
         if [ "$CLIPBOARD" = true ]; then
-          echo $str | xsel -ib
+          echo $str | xsel -ib >/dev/null 2>&1
         else
-          echo $str | xsel -ip
+          echo $str | xsel -ip >/dev/null 2>&1
         fi
         ;;
     "wayland")
         if [ "$CLIPBOARD" = true ]; then
-          echo $str | wl-copy
+          echo $str | wl-copy >/dev/null 2>&1
         else
-          echo $str | wl-copy -p
+          echo $str | wl-copy -p >/dev/null 2>&1
         fi 
         ;;
     *)
