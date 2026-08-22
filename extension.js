@@ -112,9 +112,32 @@ export default class BlurtExtension extends Extension {
         }
     }
 
+    _pasteText() {
+        try {
+            const seat = Clutter.get_default_backend().get_default_seat();
+            const virtualKeyboard = seat.create_virtual_device(Clutter.InputDeviceType.KEYBOARD_DEVICE);
+            const eventTime = Clutter.get_current_event_time() * 1000;
+
+            if (this._useClipboard) {
+                // Simula Ctrl + V
+                virtualKeyboard.notify_keyval(eventTime, Clutter.KEY_Control_L, Clutter.KeyState.PRESSED);
+                virtualKeyboard.notify_keyval(eventTime, Clutter.KEY_v, Clutter.KeyState.PRESSED);
+                virtualKeyboard.notify_keyval(eventTime, Clutter.KEY_v, Clutter.KeyState.RELEASED);
+                virtualKeyboard.notify_keyval(eventTime, Clutter.KEY_Control_L, Clutter.KeyState.RELEASED);
+            } else {
+                // Simula Shift + Insert
+                virtualKeyboard.notify_keyval(eventTime, Clutter.KEY_Shift_L, Clutter.KeyState.PRESSED);
+                virtualKeyboard.notify_keyval(eventTime, Clutter.KEY_Insert, Clutter.KeyState.PRESSED);
+                virtualKeyboard.notify_keyval(eventTime, Clutter.KEY_Insert, Clutter.KeyState.RELEASED);
+                virtualKeyboard.notify_keyval(eventTime, Clutter.KEY_Shift_L, Clutter.KeyState.RELEASED);
+            }
+        } catch (e) {
+            logError(e, `${this.metadata.name}: Error during auto-paste`);
+        }
+    }
+
     _onSpeechInput() {
         if (this._isRecording) {
-        //    log(`${this.metadata.name}: Already recording (state flag is true), ignoring speech input request.`);
             return;
         }
         if (!this._args || this._args.length === 0) {
@@ -145,6 +168,7 @@ export default class BlurtExtension extends Extension {
                     if (success) {
                         //log(`${this.metadata.name}: wsi script finished successfully.`);
                         // Style updated below in finally
+                        this._pasteText();
                     } else {
                         const wasInterrupted = stderr?.includes('Interrupted') || stderr?.includes('Signal 2');
                         if (wasInterrupted) {
@@ -199,7 +223,7 @@ export default class BlurtExtension extends Extension {
 
         //log(`${this.metadata.name}: Attempting to stop recording (sending SIGINT to rec)`);
         try {
-            const command = ["pkill", "-SIGINT", "rec"];
+            const command = ["pkill", "-2", "-x", "rec"];
             const proc = Gio.Subprocess.new(command, Gio.SubprocessFlags.NONE);
 /*
             proc.wait_check_async(null, (source, res) => {
