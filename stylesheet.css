@@ -2,24 +2,16 @@
 ."panel-button" {
     color: black;
 }
-.si-label {
+/* The panel indicator is a symbolic St.Icon; the state is conveyed by
+   tinting it through the CSS color of these classes. */
+.si-icon {
     color: white;
-    font-size: 16px;
-/*    background-color: rgba(0, 0, 0, 0.5); */
-    padding: 2px;
-    border-radius: 2px;
 }
 
-.i-label {
+.i-icon {
     color: yellow;
-    font-size: 16px;
-    padding: 2px;
-    border-radius: 2px;
 }
 
-.e-label {
+.e-icon {
     color: red;
-    font-size: 16px;
-    padding: 2px;
-    border-radius: 2px;
 }

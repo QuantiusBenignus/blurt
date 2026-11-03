@@ -13,13 +13,13 @@ import * as MessageTray from 'resource:///org/gnome/shell/ui/messageTray.js';
 const SPEECH_INPUT_KEYBINDING = 'speech-input';
 const STOP_RECORDING_KEYBINDING = 'stop-recording';
 
-const STYLE_NORMAL = 'si-label';
-const STYLE_RECORDING = 'i-label';
-const STYLE_ERROR = 'e-label';
+const STYLE_NORMAL = 'si-icon';
+const STYLE_RECORDING = 'i-icon';
+const STYLE_ERROR = 'e-icon';
 
 export default class BlurtExtension extends Extension {
     _indicator = null;
-    _iconLabel = null;
+    _indicatorIcon = null;
     _settings = null;
     _settingsChangedId = null;
     _args = [];
@@ -99,7 +99,7 @@ export default class BlurtExtension extends Extension {
              }
         }
          //log(`${this.metadata.name}: Reloaded settings. Command args: ${this._args.join(' ')}`);
-         if(this._iconLabel?.get_style_class_name() === STYLE_ERROR) {
+         if(this._indicatorIcon?.get_style_class_name() === STYLE_ERROR) {
              this._updateIndicatorStyle(STYLE_NORMAL);
          }
          this._isRecording = false;
@@ -107,8 +107,8 @@ export default class BlurtExtension extends Extension {
     }
 
     _updateIndicatorStyle(styleClassName) {
-        if (this._iconLabel) {
-            this._iconLabel.set_style_class_name(styleClassName);
+        if (this._indicatorIcon) {
+            this._indicatorIcon.set_style_class_name(styleClassName);
         }
     }
 
@@ -172,7 +172,7 @@ export default class BlurtExtension extends Extension {
                      //log(`${this.metadata.name}: Process finished. Setting _isRecording = false.`);
                      this._isRecording = false;
                      // Only reset style if it wasn't already set to ERROR
-                     if (this._iconLabel?.get_style_class_name() !== STYLE_ERROR) {
+                     if (this._indicatorIcon?.get_style_class_name() !== STYLE_ERROR) {
                          this._updateIndicatorStyle(STYLE_NORMAL);
                      }
                 }
@@ -190,7 +190,7 @@ export default class BlurtExtension extends Extension {
          if (!this._isRecording) {
              //log(`${this.metadata.name}: Not recording (state flag is false), ignoring stop request.`);
              // Make sure style is consistent if somehow out of sync
-             if (this._iconLabel?.get_style_class_name() === STYLE_RECORDING) {
+             if (this._indicatorIcon?.get_style_class_name() === STYLE_RECORDING) {
                  this._updateIndicatorStyle(STYLE_NORMAL);
              }
              return;
@@ -278,12 +278,17 @@ export default class BlurtExtension extends Extension {
         this._isRecording = false; // Ensure initial state
 
         this._indicator = new PanelMenu.Button(0, `${this.metadata.name} Indicator`, false);
-        this._iconLabel = new St.Label({
-            text: '\u{1E04}',
+        // Use a real icon, not a text glyph: a character's rendering depends on
+        // font metrics (U+1E04's dot sits below the baseline), which misaligns
+        // it in the panel in some fonts (#17). A symbolic icon is sized and
+        // aligned by the shell like every other panel icon, and its state
+        // colours come from the style classes in stylesheet.css.
+        this._indicatorIcon = new St.Icon({
+            gicon: Gio.Icon.new_for_string('audio-input-microphone-symbolic'),
             style_class: STYLE_NORMAL,
-            //reactive: true
+            icon_size: 16,
         });
-        this._indicator.add_child(this._iconLabel);
+        this._indicator.add_child(this._indicatorIcon);
 
         this._buttonPressId = this._indicator.connect('button-press-event', this._onLeftButtonPressToggle.bind(this));
         this._buttonReleaseId = this._indicator.connect('button-release-event', this._onRightButtonReleasePreferences.bind(this));
@@ -346,7 +351,7 @@ export default class BlurtExtension extends Extension {
             this._notificationSource = null;
         }
 
-        this._iconLabel = null;
+        this._indicatorIcon = null;
         this._settings = null;
         this._args = [];
         this._isRecording = false;
