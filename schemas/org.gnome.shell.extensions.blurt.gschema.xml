@@ -14,7 +14,7 @@
       <key name="whisper-path" type="s">
           <default>".local/bin/"</default>
           <summary>ASR location</summary>
-          <description>Speech recognizer executable path relative to $HOME, e.g. $HOME/.local/bin/</description>
+          <description>Directory containing the wsi speech recognizer script, or the path of the script itself; absolute, or relative to $HOME (e.g. .local/bin)</description>
       </key>
       <key name="whisper-ip" type="s">
           <default>"127.0.0.1"</default>
