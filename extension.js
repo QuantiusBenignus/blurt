@@ -13,6 +13,26 @@ import * as MessageTray from 'resource:///org/gnome/shell/ui/messageTray.js';
 const SPEECH_INPUT_KEYBINDING = 'speech-input';
 const STOP_RECORDING_KEYBINDING = 'stop-recording';
 
+// Resolve the configured 'whisper-path' to the wsi script itself.
+//
+// The setting names the directory that contains the script, relative to
+// $HOME (the schema default ".local/bin/"). Users also paste absolute
+// paths, or the full path of the script itself; both used to break:
+// build_filenamev() strips the leading separator of non-first elements,
+// so "/home/u/.local/bin" became "<home>/home/u/.local/bin", and the
+// script path got a second "wsi" appended (".../wsi/wsi"). Either way
+// the extension reported "wsi script not found" for a correct setup
+// (issues #11 and #13).
+function resolveWsiScriptPath(homeDir, configuredPath) {
+    const trimmed = configuredPath.trim().replace(/\/+$/, '');
+    const dir = GLib.path_is_absolute(trimmed)
+        ? trimmed
+        : GLib.build_filenamev([homeDir, trimmed]);
+    return GLib.path_get_basename(dir) === 'wsi'
+        ? dir
+        : GLib.build_filenamev([dir, 'wsi']);
+}
+
 const STYLE_NORMAL = 'si-label';
 const STYLE_RECORDING = 'i-label';
 const STYLE_ERROR = 'e-label';
@@ -63,8 +83,7 @@ export default class BlurtExtension extends Extension {
              return;
         }
 
-        this._asrPath = GLib.build_filenamev([homeDir, whisperPath]);
-        this._asrPath += (this._asrPath.endsWith('/') ? '' : '/') + 'wsi';
+        this._asrPath = resolveWsiScriptPath(homeDir, whisperPath);
 
         const file = Gio.File.new_for_path(this._asrPath);
         if (!file.query_exists(null) || !file.query_info('access::can-execute', Gio.FileQueryInfoFlags.NONE, null)?.get_attribute_boolean('access::can-execute')) {

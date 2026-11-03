@@ -37,8 +37,9 @@ export default class BlurtPreferences extends ExtensionPreferences {
         const settings = this.getSettings();
 
         const pathRow = new Adw.EntryRow({
-            title: _("Path to 'wsi' Directory"),
-            // Do not show full path for security/privacy, only relative to HOME
+            title: _("Path to 'wsi' Script or Directory"),
+            // Absolute paths and paths to the script itself are accepted too;
+            // a relative value is resolved against the home directory.
         });
         // Bind setting 'whisper-path' to the row's text property
         settings.bind('whisper-path', pathRow, 'text', Gio.SettingsBindFlags.DEFAULT);
